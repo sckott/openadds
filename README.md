@@ -3,7 +3,7 @@ openadds
 
 
 
-[![Build Status](https://travis-ci.org/sckott/httsnap.svg)](https://travis-ci.org/sckott/httsnap)
+[![Build Status](https://travis-ci.org/sckott/openadds.svg)](https://travis-ci.org/sckott/openadds)
 
 `openadds` is an R client for data from [Openaddresses.io](http://openaddresses.io/). Data comes from 
 
