@@ -1,0 +1,18 @@
+Package: openadds
+Title: Openaddresses.io client for R
+Description: Openaddresses.io client for R. Yay!
+Version: 0.0.1.99
+Date: 2015-04-25
+Authors@R: person("Scott", "Chamberlain", role = c("aut","cre"),
+    email = "myrmecocystus@gmail.com")
+License: MIT + file LICENSE
+URL: https://github.com/sckott/openadds
+BugReports: http://www.github.com/sckott/openadds/issues
+LazyData: true
+Roxygen: list(wrap = FALSE)
+Imports:
+    httr,
+    dplyr
+Suggests:
+    testthat,
+    roxygen2
