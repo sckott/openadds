@@ -12,8 +12,9 @@ LazyData: true
 Roxygen: list(wrap = FALSE)
 Imports:
     httr,
-    dplyr,
-    readr
+    readr,
+    xml2,
+    maptools
 Suggests:
     testthat,
     roxygen2

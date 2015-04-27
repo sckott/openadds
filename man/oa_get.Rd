@@ -2,7 +2,7 @@
 % Please edit documentation in R/oa_get.R
 \name{oa_get}
 \alias{oa_get}
-\title{Get data}
+\title{Get data from Openaddresses}
 \usage{
 oa_get(x, path = "~/.openadds", ...)
 }
@@ -14,11 +14,14 @@ oa_get(x, path = "~/.openadds", ...)
 \item{...}{Pass on curl options to \code{\link[httr]{GET}}}
 }
 \description{
-Get data
+Get data from Openaddresses
 }
 \examples{
 \dontrun{
 res <- oa_get(x = "20150316/us-nc-burke.csv")
+res <- list_data()
+(dat <- oa_get(res[5]))
+(dat2 <- oa_get(res[17]))
 }
 }
 \references{
