@@ -13,6 +13,7 @@ Roxygen: list(wrap = FALSE)
 Imports:
     httr (>= 0.6.1.9000),
     readr,
+    dplyr,
     xml2,
     maptools
 Suggests:
