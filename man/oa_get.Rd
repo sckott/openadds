@@ -18,7 +18,6 @@ Get data from Openaddresses
 }
 \examples{
 \dontrun{
-res <- oa_get(x = "20150316/us-nc-burke.csv")
 dat <- list_data()
 (out1 <- oa_get(dat[5]))
 (out2 <- oa_get(dat[21]))
