@@ -19,9 +19,28 @@ Get data from Openaddresses
 \examples{
 \dontrun{
 res <- oa_get(x = "20150316/us-nc-burke.csv")
-res <- list_data()
-(dat <- oa_get(res[5]))
-(dat2 <- oa_get(res[17]))
+dat <- list_data()
+(out1 <- oa_get(dat[5]))
+(out2 <- oa_get(dat[21]))
+(out3 <- oa_get(dat[32]))
+(out4 <- oa_get(dat[876]))
+(out5 <- oa_get(dat[376]))
+(out6 <- oa_get(dat[474]))
+(out7 <- oa_get(dat[121]))
+(out8 <- oa_get(dat[41]))
+(out9 <- oa_get(dat[400]))
+(out10 <- oa_get(dat[23])) # error
+
+# combine data sets
+(alldat <- combine(out1, out3))
+
+# Map data
+library("leaflet")
+small <- out9$data[1:10000L, ]
+leaflet(small) \%>\%
+  addTiles() \%>\%
+  addCircles(lat = ~LAT, lng = ~LON,
+             popup = unname(apply(small[, c('NUMBER', 'STREET')], 1, paste, collapse = " ")))
 }
 }
 \references{

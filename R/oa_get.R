@@ -12,36 +12,68 @@
 #' @references \url{http://openaddresses.io/}
 #' @examples \dontrun{
 #' res <- oa_get(x = "20150316/us-nc-burke.csv")
-#' res <- list_data()
-#' (dat <- oa_get(res[5]))
-#' (dat2 <- oa_get(res[17]))
+#' dat <- list_data()
+#' (out1 <- oa_get(dat[5]))
+#' (out2 <- oa_get(dat[21]))
+#' (out3 <- oa_get(dat[32]))
+#' (out4 <- oa_get(dat[876]))
+#' (out5 <- oa_get(dat[376]))
+#' (out6 <- oa_get(dat[474]))
+#' (out7 <- oa_get(dat[121]))
+#' (out8 <- oa_get(dat[41]))
+#' (out9 <- oa_get(dat[400]))
+#' (out10 <- oa_get(dat[23])) # error
+#'
+#' # combine data sets
+#' (alldat <- combine(out1, out3))
+#'
+#' # Map data
+#' library("leaflet")
+#' small <- out9$data[1:10000L, ]
+#' leaflet(small) %>%
+#'   addTiles() %>%
+#'   addCircles(lat = ~LAT, lng = ~LON,
+#'              popup = unname(apply(small[, c('NUMBER', 'STREET')], 1, paste, collapse = " ")))
 #' }
-
 oa_get <- function(x, path = "~/.openadds", ...) {
-  # resp <- oa_GET(url = sprintf("http://data.openaddresses.io.s3.amazonaws.com/%s", x), x, path, ...)
-  resp <- oa_GET(x, basename(x), path, ...)
-  # loc <- if (store$store == "disk") resp else "memory"
-  structure(list(data = resp), class = c("oa", "data.frame"), id = x, path = make_path(x, path))
+  resp <- oa_GET(url = x, fname = basename(x), path, ...)
+  structure(list(data = resp), class = c("oa", "data.frame"),
+            id = x, path = make_path(basename(x), path))
 }
 
-oa_GET <- function(url, x, path, ...){
-  file <- make_path(x, path)
-  res <- GET(url, write_disk(file, TRUE))
-  stop_for_status(res)
-  switch(strextract(basename(res$request$writer[[1]]), "\\zip|csv"),
-         csv = read_csv_(res),
-         zip = read_zip_(res, path)
+oa_GET <- function(url, fname, path, ...){
+  file <- make_path(fname, path)
+  if ( file.exists(path.expand(file)) ) {
+    ff <- file
+  } else {
+    res <- GET(url, write_disk(file, TRUE))
+    stop_for_status(res)
+    ff <- res$request$output$path
+  }
+  switch(strextract(basename(ff), "\\zip|csv"),
+         csv = read_csv_(ff),
+         zip = read_zip_(ff, path)
   )
 }
 
 read_csv_ <- function(x) {
-  readr::read_csv(x$request$writer[[1]])
+  readr::read_csv(x)
 }
 
-read_zip_ <- function(x, path) {
-  exdir <- file.path(path, strsplit(basename(x$request$writer[[1]]), "\\.")[[1]][[1]])
-  unzip(x$request$writer[[1]], exdir = exdir)
-  shpfile <- list.files(exdir, pattern = ".shp", full.names = TRUE, recursive = TRUE)
+read_zip_ <- function(fname, path) {
+  exdir <- file.path(path, strsplit(basename(fname), "\\.")[[1]][[1]])
+  unzip(fname, exdir = exdir)
+  switch(file_type(exdir),
+         csv = {
+           files <- list.files(exdir, pattern = ".csv", full.names = TRUE, recursive = TRUE)
+           if (length(files) > 1) stop('More than 1 csv file found', call. = FALSE)
+           readr::read_csv(files)
+         },
+         shp = read_shp(exdir))
+}
+
+read_shp <- function(dir) {
+  shpfile <- list.files(dir, pattern = ".shp", full.names = TRUE, recursive = TRUE)
   if (length(shpfile) != 1) {
     shpfile2 <- grep("\\.shp$", shpfile, value = TRUE)
     shpfile <- shpfile2[1]
@@ -51,13 +83,25 @@ read_zip_ <- function(x, path) {
   tmp@data
 }
 
+file_type <- function(b) {
+  ff <- basename(list.files(b, full.names = TRUE, recursive = TRUE))
+  if (any(grepl("\\.csv", ff))) {
+    "csv"
+  } else if (any(grepl("\\.shp", ff))) {
+    "shp"
+  } else {
+    stop("not file type csv or shp", call. = FALSE)
+  }
+}
+
 make_path <- function(x, path) {
   file.path(path, x)
   # file.path(path, strsplit(x, "/")[[1]][[2]])
 }
 
 #' @export
-print.oa <- function(x, ..., n = 10){
+print.oa <- function(x, ..., n = 10) {
   cat(sprintf("<Openaddresses data> %s", attr(x, "path")), sep = "\n")
+  cat(sprintf("Dimensions [%s, %s]\n", NROW(x$data), NCOL(x$data)), sep = "\n")
   trunc_mat(x$data, n = n)
 }
