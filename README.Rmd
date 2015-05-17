@@ -18,24 +18,51 @@ knitr::opts_chunk$set(
 
 ```{r eval=FALSE}
 install.packages("devtools")
+devtools::install_github("rstudio/leaflet")
 devtools::install_github("sckott/openadds")
 ```
 
-And load `dplyr` for parsing data.frame's
-
 ```{r}
-library("dplyr")
 library("openadds")
 ```
 
-## Search for data
+## List datasets
 
 ```{r}
-"xxx"
+dat <- list_data()
+head(dat)
 ```
 
 ## Get data
 
-```{r message=TRUE}
-"xx"
+```{r}
+(out1 <- oa_get(dat[5]))
 ```
+
+## Combine multiple datasets
+
+```{r}
+out2 <- oa_get(dat[32])
+(alldat <- combine(out1, out2))
+```
+
+## Map data
+
+Get some data
+
+```{r}
+(out <- oa_get(dat[400]))
+```
+
+Make an interactive map (not all data)
+
+```{r eval=FALSE}
+library("leaflet")
+small <- out$data[1:10000L, ]
+leaflet(small) %>%
+   addTiles() %>%
+   addCircles(lat = ~LAT, lng = ~LON,
+      popup = unname(apply(small[, c('NUMBER', 'STREET')], 1, paste, collapse = " ")))
+```
+
+![map1](inst/img/map.png)
