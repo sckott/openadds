@@ -26,13 +26,12 @@ library("openadds")
 
 ```r
 dat <- oa_list()
-head(dat)
-#> [1] "/openaddresses-complete.zip"                                                    
-#> [2] "http://data.openaddresses.io.s3.amazonaws.com/20150511/au-tas-launceston.csv"   
-#> [3] "http://s3.amazonaws.com/data.openaddresses.io/20141127/au-victoria.zip"         
-#> [4] "http://data.openaddresses.io.s3.amazonaws.com/20150511/be-flanders.zip"         
-#> [5] "http://data.openaddresses.io.s3.amazonaws.com/20150417/ca-ab-calgary.zip"       
-#> [6] "http://data.openaddresses.io.s3.amazonaws.com/20150511/ca-ab-grande_prairie.zip"
+dat[2:6]
+#> [1] "http://data.openaddresses.io.s3.amazonaws.com/20150511/au-tas-launceston.csv"   
+#> [2] "http://s3.amazonaws.com/data.openaddresses.io/20141127/au-victoria.zip"         
+#> [3] "http://data.openaddresses.io.s3.amazonaws.com/20150511/be-flanders.zip"         
+#> [4] "http://data.openaddresses.io.s3.amazonaws.com/20150417/ca-ab-calgary.zip"       
+#> [5] "http://data.openaddresses.io.s3.amazonaws.com/20150511/ca-ab-grande_prairie.zip"
 ```
 
 ## Search for datasets
@@ -59,6 +58,8 @@ oa_search(country = "us", state = "ca")
 
 ## Get data
 
+Passing in a URL
+
 
 ```r
 (out1 <- oa_get(dat[5]))
@@ -80,6 +81,45 @@ oa_search(country = "us", state = "ca")
 #> Variables not shown: STREET_QUA (fctr), HOUSE_NUMB (int), HOUSE_ALPH
 #>      (fctr), SUITE_NUMB (int), SUITE_ALPH (fctr), LONGITUDE (dbl),
 #>      LATITUDE (dbl), COMM_NAME (fctr)
+```
+
+First getting URL for dataset through `as_openadd()`, then passing to `oa_get()`
+
+
+```r
+(x <- as_openadd("us", "nm", "hidalgo"))
+#> <<OpenAddreses>> 
+#>   <<country>> us
+#>   <<state>> nm
+#>   <<city>> hidalgo
+#>   <<extension>> .csv
+```
+
+
+```r
+oa_get(x)
+#> <Openaddresses data> ~/.openadds/us-nm-hidalgo.csv
+#> Dimensions [170659, 37]
+#> 
+#>    OBJECTID Shape ADD_NUM ADD_SUF PRE_MOD PRE_DIR PRE_TYPE         ST_NAME
+#> 1         1    NA     422                       S                      2ND
+#> 2         2    NA    1413                       S                      4TH
+#> 3         3    NA     412                       E                 CHAMPION
+#> 4         4    NA     110                       E                   SAMANO
+#> 5         5    NA    2608                       W          FREDDY GONZALEZ
+#> 6         6    NA    2604                       W          FREDDY GONZALEZ
+#> 7         7    NA    1123                       W                      FAY
+#> 8         8    NA     417                       S                      2ND
+#> 9         9    NA    4551                       E                    TEXAS
+#> 10       10    NA     810                                        DRIFTWOOD
+#> ..      ...   ...     ...     ...     ...     ...      ...             ...
+#> Variables not shown: ST_TYPE (chr), POS_DIR (chr), POS_MOD (chr), ESN
+#>      (int), MSAG_COMM (chr), PARCEL_ID (chr), PLACE_TYPE (chr), LANDMARK
+#>      (chr), BUILDING (chr), UNIT (chr), ROOM (chr), FLOOR (int), LOC_NOTES
+#>      (chr), ST_ALIAS (chr), FULL_ADDR (chr), ZIP (chr), POSTAL_COM (chr),
+#>      MUNICIPAL (chr), COUNTY (chr), STATE (chr), SOURCE (chr), REGION
+#>      (chr), EXCH (chr), LAT (dbl), LONG (dbl), PICTURE (chr), OA:x (dbl),
+#>      OA:y (dbl), OA:geom (chr)
 ```
 
 ## Combine multiple datasets

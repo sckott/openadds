@@ -1,7 +1,10 @@
 #' Coerce to openadd object
 #'
 #' @export
-#' @param x Input
+#' @param country (characater) Country name
+#' @param state (characater) State (or province) name
+#' @param city (characater) City name
+#' @param ext (characater) One of \code{.zip} or \code{.csv}
 #' @param ... Ignored
 #' @examples \dontrun{
 #' as_openadd("us", "nm", "hidalgo")

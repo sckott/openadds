@@ -30,7 +30,7 @@ library("openadds")
 
 ```{r}
 dat <- oa_list()
-head(dat)
+dat[2:6]
 ```
 
 ## Search for datasets
@@ -41,8 +41,20 @@ oa_search(country = "us", state = "ca")
 
 ## Get data
 
+Passing in a URL
+
 ```{r}
 (out1 <- oa_get(dat[5]))
+```
+
+First getting URL for dataset through `as_openadd()`, then passing to `oa_get()`
+
+```{r}
+(x <- as_openadd("us", "nm", "hidalgo"))
+```
+
+```{r}
+oa_get(x)
 ```
 
 ## Combine multiple datasets
