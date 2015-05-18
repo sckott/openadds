@@ -29,8 +29,14 @@ library("openadds")
 ## List datasets
 
 ```{r}
-dat <- list_data()
+dat <- oa_list()
 head(dat)
+```
+
+## Search for datasets
+
+```{r}
+oa_search(country = "us", state = "ca")
 ```
 
 ## Get data
@@ -43,7 +49,7 @@ head(dat)
 
 ```{r}
 out2 <- oa_get(dat[32])
-(alldat <- combine(out1, out2))
+(alldat <- oa_combine(out1, out2))
 ```
 
 ## Map data

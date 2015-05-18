@@ -18,7 +18,7 @@
 #' oa_search(ext = ".zip")
 #' }
 oa_search <- function(country = NULL, state = NULL, city = NULL, ext = NULL, ...) {
-  dd <- list_data()[-1]
+  dd <- oa_list()[-1]
   all <- lapply(dd, function(x) {
     tmp <- basename(x)
     ext <- strextract(tmp, "\\.[a-z]+")

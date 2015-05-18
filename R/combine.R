@@ -9,9 +9,9 @@
 #' dat <- list_data()
 #' out1 <- oa_get(dat[5])
 #' out2 <- oa_get(dat[32])
-#' (alldat <- combine(out1, out2))
+#' (alldat <- oa_combine(out1, out2))
 #' }
-combine <- function(...) {
+oa_combine <- function(...) {
   cb <- list(...)
   classes <- vapply(cb, is, logical(1), class2 = "oa")
   if (!all(classes)) stop("all inputs must be of class 'oa'", call. = FALSE)

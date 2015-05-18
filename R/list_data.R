@@ -5,10 +5,10 @@
 #' @param ... Pass on curl options to \code{\link[httr]{GET}}
 #'
 #' @examples \dontrun{
-#' res <- list_data()
+#' res <- oa_list()
 #' res[5]
 #' }
-list_data <- function(...) {
+oa_list <- function(...) {
   res <- GET(get_link(), ...)
   tt <- content(res, "text")
   ht <- xml2::read_html(tt)

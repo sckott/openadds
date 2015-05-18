@@ -25,7 +25,7 @@ library("openadds")
 
 
 ```r
-dat <- list_data()
+dat <- oa_list()
 head(dat)
 #> [1] "/openaddresses-complete.zip"                                                    
 #> [2] "http://data.openaddresses.io.s3.amazonaws.com/20150511/au-tas-launceston.csv"   
@@ -33,6 +33,28 @@ head(dat)
 #> [4] "http://data.openaddresses.io.s3.amazonaws.com/20150511/be-flanders.zip"         
 #> [5] "http://data.openaddresses.io.s3.amazonaws.com/20150417/ca-ab-calgary.zip"       
 #> [6] "http://data.openaddresses.io.s3.amazonaws.com/20150511/ca-ab-grande_prairie.zip"
+```
+
+## Search for datasets
+
+
+```r
+oa_search(country = "us", state = "ca")
+#> Source: local data frame [68 x 5]
+#> 
+#>    country state             city  ext
+#> 1       us    ca san_mateo_county .zip
+#> 2       us    ca   alameda_county .zip
+#> 3       us    ca   alameda_county .zip
+#> 4       us    ca           amador .zip
+#> 5       us    ca           amador .zip
+#> 6       us    ca      bakersfield .zip
+#> 7       us    ca      bakersfield .zip
+#> 8       us    ca         berkeley .zip
+#> 9       us    ca         berkeley .zip
+#> 10      us    ca     butte_county .zip
+#> ..     ...   ...              ...  ...
+#> Variables not shown: url (chr)
 ```
 
 ## Get data
@@ -43,19 +65,20 @@ head(dat)
 #> <Openaddresses data> ~/.openadds/ca-ab-calgary.zip
 #> Dimensions [350962, 13]
 #> 
-#>    OBJECTID ADDRESS_TY                 ADDRESS    STREET_NAM STREET_TYP STREET_QUA HOUSE_NUMB
-#> 0    757023     Parcel  249 SAGE MEADOWS CI NW  SAGE MEADOWS         CI         NW        249
-#> 1    757022     Parcel           2506 17 ST SE            17         ST         SE       2506
-#> 2    757021     Parcel     305 EVANSPARK GD NW     EVANSPARK         GD         NW        305
-#> 3    757020     Parcel     321 EVANSPARK GD NW     EVANSPARK         GD         NW        321
-#> 4    757019     Parcel   204 EVANSBROOKE LD NW   EVANSBROOKE         LD         NW        204
-#> 5    757018     Parcel   200 EVANSBROOKE LD NW   EVANSBROOKE         LD         NW        200
-#> 6    757017     Parcel 219 HIDDEN VALLEY LD NW HIDDEN VALLEY         LD         NW        219
-#> 7    757016     Parcel 211 HIDDEN VALLEY LD NW HIDDEN VALLEY         LD         NW        211
-#> 8    757015     Parcel 364 HIDDEN VALLEY LD NW HIDDEN VALLEY         LD         NW        364
-#> 9    757014     Parcel 348 HIDDEN VALLEY LD NW HIDDEN VALLEY         LD         NW        348
-#> ..      ...        ...                     ...           ...        ...        ...        ...
-#> Variables not shown: HOUSE_ALPH (fctr), SUITE_NUMB (int), SUITE_ALPH (fctr), LONGITUDE (dbl),
+#>    OBJECTID ADDRESS_TY                 ADDRESS    STREET_NAM STREET_TYP
+#> 0    757023     Parcel  249 SAGE MEADOWS CI NW  SAGE MEADOWS         CI
+#> 1    757022     Parcel           2506 17 ST SE            17         ST
+#> 2    757021     Parcel     305 EVANSPARK GD NW     EVANSPARK         GD
+#> 3    757020     Parcel     321 EVANSPARK GD NW     EVANSPARK         GD
+#> 4    757019     Parcel   204 EVANSBROOKE LD NW   EVANSBROOKE         LD
+#> 5    757018     Parcel   200 EVANSBROOKE LD NW   EVANSBROOKE         LD
+#> 6    757017     Parcel 219 HIDDEN VALLEY LD NW HIDDEN VALLEY         LD
+#> 7    757016     Parcel 211 HIDDEN VALLEY LD NW HIDDEN VALLEY         LD
+#> 8    757015     Parcel 364 HIDDEN VALLEY LD NW HIDDEN VALLEY         LD
+#> 9    757014     Parcel 348 HIDDEN VALLEY LD NW HIDDEN VALLEY         LD
+#> ..      ...        ...                     ...           ...        ...
+#> Variables not shown: STREET_QUA (fctr), HOUSE_NUMB (int), HOUSE_ALPH
+#>      (fctr), SUITE_NUMB (int), SUITE_ALPH (fctr), LONGITUDE (dbl),
 #>      LATITUDE (dbl), COMM_NAME (fctr)
 ```
 
@@ -64,7 +87,7 @@ head(dat)
 
 ```r
 out2 <- oa_get(dat[32])
-(alldat <- combine(out1, out2))
+(alldat <- oa_combine(out1, out2))
 #> Source: local data frame [418,623 x 3]
 #> 
 #>          lon      lat                 address

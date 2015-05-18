@@ -11,7 +11,7 @@
 #'
 #' @references \url{http://openaddresses.io/}
 #' @examples \dontrun{
-#' dat <- list_data()
+#' dat <- oa_list()
 #' (out1 <- oa_get(dat[5]))
 #' (out2 <- oa_get(dat[21]))
 #' (out3 <- oa_get(dat[32]))
@@ -24,7 +24,7 @@
 #' (out10 <- oa_get(dat[23])) # error
 #'
 #' # combine data sets
-#' (alldat <- combine(out1, out3))
+#' (alldat <- oa_combine(out1, out3))
 #'
 #' # Map data
 #' library("leaflet")
