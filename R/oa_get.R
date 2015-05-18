@@ -5,7 +5,7 @@
 #' @importFrom readr read_csv
 #' @importFrom maptools readShapeSpatial
 #'
-#' @param x State name
+#' @param x URL for an openaddresses dataset, or an object of class openadd
 #' @param path Path to store files in, a directory, not the file name
 #' @param ... Pass on curl options to \code{\link[httr]{GET}}
 #'
@@ -23,6 +23,9 @@
 #' (out9 <- oa_get(dat[400]))
 #' (out10 <- oa_get(dat[23])) # error
 #'
+#' # from a openadd class object
+#' as_openadd("us", "nm", "hidalgo") %>% oa_get
+#'
 #' # combine data sets
 #' (alldat <- oa_combine(out1, out3))
 #'
@@ -35,6 +38,16 @@
 #'              popup = unname(apply(small[, c('NUMBER', 'STREET')], 1, paste, collapse = " ")))
 #' }
 oa_get <- function(x, path = "~/.openadds", ...) {
+  UseMethod("oa_get")
+}
+
+#' @export
+oa_get.openadd <- function(x, path = "~/.openadds", ...) {
+  oa_get(x[[1]], ...)
+}
+
+#' @export
+oa_get.character <- function(x, path = "~/.openadds", ...) {
   resp <- oa_GET(url = x, fname = basename(x), path, ...)
   structure(list(data = resp), class = c("oa", "data.frame"),
             id = x, path = make_path(basename(x), path))
@@ -95,7 +108,6 @@ file_type <- function(b) {
 
 make_path <- function(x, path) {
   file.path(path, x)
-  # file.path(path, strsplit(x, "/")[[1]][[2]])
 }
 
 #' @export

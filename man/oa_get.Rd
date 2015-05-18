@@ -7,7 +7,7 @@
 oa_get(x, path = "~/.openadds", ...)
 }
 \arguments{
-\item{x}{State name}
+\item{x}{URL for an openaddresses dataset, or an object of class openadd}
 
 \item{path}{Path to store files in, a directory, not the file name}
 
@@ -29,6 +29,9 @@ dat <- oa_list()
 (out8 <- oa_get(dat[41]))
 (out9 <- oa_get(dat[400]))
 (out10 <- oa_get(dat[23])) # error
+
+# from a openadd class object
+as_openadd("us", "nm", "hidalgo") \%>\% oa_get
 
 # combine data sets
 (alldat <- oa_combine(out1, out3))
