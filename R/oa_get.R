@@ -54,9 +54,11 @@ oa_get.character <- function(x, path = "~/.openadds", ...) {
 }
 
 oa_GET <- function(url, fname, path, ...){
+  make_basedir(path)
   file <- make_path(fname, path)
   if ( file.exists(path.expand(file)) ) {
     ff <- file
+    message("Reading from cached data")
   } else {
     res <- GET(url, write_disk(file, TRUE))
     stop_for_status(res)
@@ -66,6 +68,10 @@ oa_GET <- function(url, fname, path, ...){
          csv = read_csv_(ff),
          zip = read_zip_(ff, path)
   )
+}
+
+make_basedir <- function(path) {
+  dir.create(path, showWarnings = FALSE, recursive = TRUE)
 }
 
 read_csv_ <- function(x) {
