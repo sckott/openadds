@@ -12,7 +12,14 @@ knitr::opts_chunk$set(
 
 [![Build Status](https://travis-ci.org/sckott/openadds.svg)](https://travis-ci.org/sckott/openadds)
 
-`openadds` is an R client for data from [Openaddresses.io](http://openaddresses.io/). Data comes from 
+`openadds` is an R client for data from [Openaddresses.io](http://openaddresses.io/). Data comes from [http://data.openaddresses.io](http://data.openaddresses.io). 
+
+The reason for creating this R client is that the data coming from OpenAddresses is heterogenous in many ways:
+
+* File types: sometimes provided as a csv, sometimes as a Shape file
+* Data fields: columns in each dataset vary. Some have no lat/long data, or if present are variously labeled `LON`/`LONGITUDE/LNG` etc., and address fields are especially variable
+
+This pacakge tries to make it easy to retreive the data, as well as combine data sets, and visualize. 
 
 ## Install
 
