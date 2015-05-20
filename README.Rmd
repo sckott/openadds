@@ -68,19 +68,19 @@ out2 <- oa_get(dat[32])
 
 Get some data
 
-```{r}
-(out <- oa_get(dat[400]))
+```{r eval=FALSE}
+x <- oa_get(oa_search(country = "us", city = "boulder")[1,]$url)
+y <- oa_get(oa_search(country = "us", city = "gunnison")[1,]$url)
 ```
 
-Make an interactive map (not all data)
+Make an interactive map
 
 ```{r eval=FALSE}
 library("leaflet")
-small <- out$data[1:10000L, ]
-leaflet(small) %>%
-   addTiles() %>%
-   addCircles(lat = ~LAT, lng = ~LON,
-      popup = unname(apply(small[, c('NUMBER', 'STREET')], 1, paste, collapse = " ")))
+oa_combine(x, y) %>% 
+  leaflet() %>%
+  addTiles() %>%
+  addCircles(lat = ~lat, lng = ~lon, popup = ~address)
 ```
 
 ![map1](inst/img/map.png)
