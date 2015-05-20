@@ -31,7 +31,7 @@ dat <- oa_list()
 (out10 <- oa_get(dat[23])) # error
 
 # from a openadd class object
-as_openadd("us", "nm", "hidalgo") \%>\% oa_get
+oa_get(as_openadd("us", "nm", "hidalgo"))
 
 # combine data sets
 (alldat <- oa_combine(out1, out3))

@@ -18,10 +18,23 @@ Gives back a single \code{tbl_df}, with a subset of columns, currently
 }
 \examples{
 \dontrun{
-dat <- list_data()
+dat <- oa_list()
+
 out1 <- oa_get(dat[5])
 out2 <- oa_get(dat[32])
 (alldat <- oa_combine(out1, out2))
+
+out3 <- oa_get(dat[368])
+out4 <- oa_get(dat[788])
+(alldat <- oa_combine(out1, out2))
+
+x <- oa_get(dat[535])
+y <- oa_get(dat[349])
+(alldat <- oa_combine(x, y))
+library("leaflet")
+leaflet(alldat) \%>\%
+  addTiles() \%>\%
+  addCircles(lat = ~lat, lng = ~lon, popup = ~address)
 }
 }
 
