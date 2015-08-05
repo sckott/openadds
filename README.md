@@ -4,6 +4,7 @@ openadds
 
 
 [![Build Status](https://travis-ci.org/sckott/openadds.svg)](https://travis-ci.org/sckott/openadds)
+[![codecov.io](https://codecov.io/github/sckott/openadds/coverage.svg?branch=master)](https://codecov.io/github/sckott/openadds?branch=master)
 
 `openadds` is an R client for data from [Openaddresses.io](http://openaddresses.io/). Data comes from [http://data.openaddresses.io](http://data.openaddresses.io). 
 
