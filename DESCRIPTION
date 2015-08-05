@@ -1,8 +1,7 @@
 Package: openadds
-Title: Openaddresses.io client for R
-Description: Openaddresses.io client for R. Yay!
-Version: 0.0.3.910
-Date: 2015-05-20
+Title: 'Openaddresses.io' Client for R
+Description: 'Openaddresses.io' client for R. Yay!
+Version: 0.0.4.9000
 Authors@R: person("Scott", "Chamberlain", role = c("aut","cre"),
     email = "myrmecocystus@gmail.com")
 License: MIT + file LICENSE
