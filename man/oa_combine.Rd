@@ -20,16 +20,16 @@ Gives back a single \code{tbl_df}, with a subset of columns, currently
 \dontrun{
 dat <- oa_list()
 
-out1 <- oa_get(dat[5])
-out2 <- oa_get(dat[32])
+out1 <- oa_get(dat$processed[6])
+out2 <- oa_get(dat$processed[35])
 (alldat <- oa_combine(out1, out2))
 
-out3 <- oa_get(dat[368])
-out4 <- oa_get(dat[788])
+out3 <- oa_get(dat$processed[368])
+out4 <- oa_get(dat$processed[788])
 (alldat <- oa_combine(out1, out2))
 
-x <- oa_get(dat[535])
-y <- oa_get(dat[349])
+x <- oa_get(dat$processed[534])
+y <- oa_get(dat$processed[349])
 (alldat <- oa_combine(x, y))
 library("leaflet")
 leaflet(alldat) \%>\%

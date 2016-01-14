@@ -4,7 +4,7 @@
 \alias{as_openadd}
 \title{Coerce to openadd object}
 \usage{
-as_openadd(country = NULL, state = NULL, city = NULL, ext = NULL, ...)
+as_openadd(country = NULL, state = NULL, city = NULL, ...)
 }
 \arguments{
 \item{country}{(characater) Country name}
@@ -13,16 +13,14 @@ as_openadd(country = NULL, state = NULL, city = NULL, ext = NULL, ...)
 
 \item{city}{(characater) City name}
 
-\item{ext}{(characater) One of \code{.zip} or \code{.csv}}
-
-\item{...}{Ignored}
+\item{...}{ignored}
 }
 \description{
 Coerce to openadd object
 }
 \examples{
 \dontrun{
-as_openadd("us", "nm", "hidalgo")
+as_openadd(country="us", state="nv", city="las_vegas")
 }
 }
 

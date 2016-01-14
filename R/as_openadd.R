@@ -4,7 +4,7 @@
 #' @param country (characater) Country name
 #' @param state (characater) State (or province) name
 #' @param city (characater) City name
-#' @param ... Ignored
+#' @param ... ignored
 #' @examples \dontrun{
 #' as_openadd(country="us", state="nv", city="las_vegas")
 #' }

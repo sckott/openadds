@@ -4,7 +4,7 @@
 \alias{oa_search}
 \title{Search Openaddresses datasets}
 \usage{
-oa_search(country = NULL, state = NULL, city = NULL, ext = NULL, ...)
+oa_search(country = NULL, state = NULL, city = NULL, ...)
 }
 \arguments{
 \item{country}{(characater) Country name}
@@ -12,8 +12,6 @@ oa_search(country = NULL, state = NULL, city = NULL, ext = NULL, ...)
 \item{state}{(characater) State (or province) name}
 
 \item{city}{(characater) City name}
-
-\item{ext}{(characater) One of \code{.zip} or \code{.csv}}
 
 \item{...}{Pass on curl options to \code{\link[httr]{GET}}}
 }
@@ -30,7 +28,7 @@ oa_search(country = "us")
 oa_search(country = "us", state = "ca")
 oa_search(state = "tx")
 oa_search(city = "houston")
-oa_search(ext = ".zip")
+oa_search("us", "nv", "las_vegas")
 }
 }
 
