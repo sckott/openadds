@@ -19,3 +19,4 @@ Suggests:
     testthat,
     roxygen2,
     leaflet
+RoxygenNote: 5.0.1
