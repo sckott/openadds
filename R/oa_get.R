@@ -9,19 +9,19 @@
 #' @references \url{http://openaddresses.io/}
 #' @examples \dontrun{
 #' dat <- oa_list()
-#' (out1 <- oa_get(dat[5]))
-#' (out2 <- oa_get(dat[21]))
-#' (out3 <- oa_get(dat[32]))
-#' (out4 <- oa_get(dat[876]))
-#' (out5 <- oa_get(dat[376]))
-#' (out6 <- oa_get(dat[474]))
-#' (out7 <- oa_get(dat[121]))
-#' (out8 <- oa_get(dat[41]))
-#' (out9 <- oa_get(dat[400]))
-#' (out10 <- oa_get(dat[23])) # error
+#' urls <- na.omit(dat$processed)
+#' (out1 <- oa_get(urls[6]))
+#' (out2 <- oa_get(urls[12]))
+#' (out3 <- oa_get(urls[32]))
+#' (out4 <- oa_get(urls[876]))
+#' (out5 <- oa_get(urls[376]))
+#' (out6 <- oa_get(urls[474]))
+#' (out7 <- oa_get(urls[121]))
+#' (out8 <- oa_get(urls[41]))
+#' (out9 <- oa_get(urls[400]))
 #'
 #' # from a openadd class object
-#' oa_get(as_openadd("us", "nm", "hidalgo"))
+#' oa_get(as_openadd(country="us", state="nv", city="las_vegas"))
 #'
 #' # combine data sets
 #' (alldat <- oa_combine(out1, out3))

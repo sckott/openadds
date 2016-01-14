@@ -4,7 +4,6 @@
 #' @param country (characater) Country name
 #' @param state (characater) State (or province) name
 #' @param city (characater) City name
-#' @param ext (characater) One of \code{.zip} or \code{.csv}
 #' @param ... Pass on curl options to \code{\link[httr]{GET}}
 #' @examples \dontrun{
 #' # return all data in a data.frame
@@ -15,31 +14,38 @@
 #' oa_search(country = "us", state = "ca")
 #' oa_search(state = "tx")
 #' oa_search(city = "houston")
-#' oa_search(ext = ".zip")
+#' oa_search("us", "nv", "las_vegas")
 #' }
-oa_search <- function(country = NULL, state = NULL, city = NULL, ext = NULL, ...) {
-  dd <- oa_list()$source
-  all <- lapply(dd, function(x) {
+oa_search <- function(country = NULL, state = NULL, city = NULL, ...) {
+  dd <- oa_list()
+
+  all <- Map(function(x, y) {
     tmp <- basename(x)
     ext <- strextract(tmp, "\\.[a-z]+")
     locs <- strsplit(gsub("\\.[a-z]+", "", x), "/")[[1]]
     locs <- if (length(locs) == 4) {
-      c(locs[1:2], paste0(locs[3:4], collapse = "_"))
+      c(c(locs[1:2], paste0(locs[3:4], collapse = "_")), "")
     } else if (length(locs) == 2) {
-      c(locs[1:2], "")
+      try2 <- tryCatch(as.numeric(locs[2]), warning = function(w) w)
+      if (!is(try2, "warning")) {
+        c(locs[1], "", "", locs[2])
+      } else {
+        c(locs[1], "", locs[2], "")
+      }
     } else if (length(locs) == 1) {
-      c(locs[1], "", "")
+      c(locs[1], "", "", "")
     } else {
-      locs
+      c(locs, "")
     }
-    setNames(data.frame(t(c(locs, ext, x)), stringsAsFactors = FALSE),
-             c("country", "state", "city", "ext", "url"))
-  })
+    setNames(data.frame(t(c(locs, y)), stringsAsFactors = FALSE),
+             c("country", "state", "city", "id", "url"))
+  }, dd$source, dd$processed)
+
   df <- dplyr::rbind_all(all)
-  if (length(comp(list(country, state, city, ext))) == 0) {
+  if (length(comp(list(country, state, city))) == 0) {
     return(df)
   } else {
-    sub_set(df, list(country = country, state = state, city = city, ext = ext))
+    sub_set(df, list(country = country, state = state, city = city))
   }
 }
 
@@ -53,9 +59,6 @@ sub_set <- function(df, x) {
   }
   if ("city" %in% names(vars)) {
     df <- df[ df$city == vars$city, ]
-  }
-  if ("ext" %in% names(vars)) {
-    df <- df[ df$ext == vars$ext, ]
   }
   df
 }
