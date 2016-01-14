@@ -1,7 +1,6 @@
 #' Combine data helper
 #'
 #' @export
-#' @importFrom dplyr rbind_all
 #' @param ... Data sets, all of class \code{oa}
 #' @details Gives back a single \code{tbl_df}, with a subset of columns, currently
 #' \code{lon}, \code{lat}, and \code{address}

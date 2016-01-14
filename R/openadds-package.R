@@ -4,6 +4,7 @@
 #' @importFrom readr read_csv read_tsv
 #' @importFrom maptools readShapeSpatial
 #' @importFrom xml2 read_html xml_find_all xml_attr
+#' @importFrom dplyr rbind_all
 #' @name openadds-package
 #' @aliases openadds
 #' @docType package

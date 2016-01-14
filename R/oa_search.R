@@ -18,11 +18,11 @@
 #' oa_search(ext = ".zip")
 #' }
 oa_search <- function(country = NULL, state = NULL, city = NULL, ext = NULL, ...) {
-  dd <- oa_list(...)[-1]
+  dd <- oa_list()$source
   all <- lapply(dd, function(x) {
     tmp <- basename(x)
     ext <- strextract(tmp, "\\.[a-z]+")
-    locs <- strsplit(gsub("\\.[a-z]+", "", tmp), "-")[[1]]
+    locs <- strsplit(gsub("\\.[a-z]+", "", x), "/")[[1]]
     locs <- if (length(locs) == 4) {
       c(locs[1:2], paste0(locs[3:4], collapse = "_"))
     } else if (length(locs) == 2) {
@@ -35,7 +35,7 @@ oa_search <- function(country = NULL, state = NULL, city = NULL, ext = NULL, ...
     setNames(data.frame(t(c(locs, ext, x)), stringsAsFactors = FALSE),
              c("country", "state", "city", "ext", "url"))
   })
-  df <- rbind_all(all)
+  df <- dplyr::rbind_all(all)
   if (length(comp(list(country, state, city, ext))) == 0) {
     return(df)
   } else {
