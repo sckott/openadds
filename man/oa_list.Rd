@@ -9,13 +9,17 @@ oa_list(...)
 \arguments{
 \item{...}{Pass on curl options to \code{\link[httr]{GET}}}
 }
+\value{
+A data.frame
+}
 \description{
 List available data
 }
 \examples{
 \dontrun{
-res <- oa_list()
-res[5]
+(res <- oa_list())
+# mean address count
+mean(res$`address count`, na.rm = TRUE)
 }
 }
 

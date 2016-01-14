@@ -1,9 +1,6 @@
 #' Get data from Openaddresses
 #'
 #' @export
-#' @importFrom httr GET stop_for_status write_disk config content
-#' @importFrom readr read_csv
-#' @importFrom maptools readShapeSpatial
 #'
 #' @param x URL for an openaddresses dataset, or an object of class openadd
 #' @param path Path to store files in, a directory, not the file name

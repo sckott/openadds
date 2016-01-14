@@ -1,6 +1,8 @@
 Package: openadds
 Title: 'Openaddresses.io' Client for R
-Description: 'Openaddresses.io' client for R. Yay!
+Description: Openaddresses (<http://openaddresses.io/>) client. Search,
+    fetch data, and combine datasets. Outputs are easy to visualize
+    with base, ggplot2, or leaflet plots.
 Version: 0.0.4.9000
 Authors@R: person("Scott", "Chamberlain", role = c("aut","cre"),
     email = "myrmecocystus@gmail.com")
@@ -8,15 +10,13 @@ License: MIT + file LICENSE
 URL: https://github.com/sckott/openadds
 BugReports: http://www.github.com/sckott/openadds/issues
 LazyData: true
-Roxygen: list(wrap = FALSE)
 Imports:
-    httr (>= 0.6.1.9000),
+    httr (>= 1.0.0),
     readr,
     dplyr,
     xml2,
     maptools
 Suggests:
     testthat,
-    roxygen2,
     leaflet
 RoxygenNote: 5.0.1
