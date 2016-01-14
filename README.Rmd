@@ -24,9 +24,15 @@ This pacakge tries to make it easy to retreive the data, as well as combine data
 
 ## Install
 
+CRAN (and get `leaflet`)
+
 ```{r eval=FALSE}
-install.packages("devtools")
-devtools::install_github("rstudio/leaflet")
+install.packages(c("leaflet", "openadds"))
+```
+
+Dev version
+
+```{r eval=FALSE}
 devtools::install_github("sckott/openadds")
 ```
 
@@ -37,8 +43,7 @@ library("openadds")
 ## List datasets
 
 ```{r}
-dat <- oa_list()
-dat[2:6]
+(dat <- oa_list())
 ```
 
 ## Search for datasets
@@ -52,13 +57,13 @@ oa_search(country = "us", state = "ca")
 Passing in a URL
 
 ```{r}
-(out1 <- oa_get(dat[5]))
+(out1 <- oa_get(dat$processed[6]))
 ```
 
 First getting URL for dataset through `as_openadd()`, then passing to `oa_get()`
 
 ```{r}
-(x <- as_openadd("us", "nm", "hidalgo"))
+(x <- as_openadd("us", "nv", "las_vegas"))
 ```
 
 ```{r}
@@ -68,7 +73,7 @@ oa_get(x)
 ## Combine multiple datasets
 
 ```{r}
-out2 <- oa_get(dat[32])
+out2 <- oa_get(dat$processed[35])
 (alldat <- oa_combine(out1, out2))
 ```
 
@@ -77,18 +82,16 @@ out2 <- oa_get(dat[32])
 Get some data
 
 ```{r eval=FALSE}
-x <- oa_get(oa_search(country = "us", city = "boulder")[1,]$url)
-y <- oa_get(oa_search(country = "us", city = "gunnison")[1,]$url)
+x <- oa_get(oa_search(city = "oregon_city")[1,]$url)
 ```
 
 Make an interactive map
 
 ```{r eval=FALSE}
 library("leaflet")
-oa_combine(x, y) %>% 
-  leaflet() %>%
+leaflet(data = x$data) %>%
   addTiles() %>%
-  addCircles(lat = ~lat, lng = ~lon, popup = ~address)
+  addCircles(lat = ~LAT, lng = ~LON, popup = ~STREET)
 ```
 
 ![map1](inst/img/map.png)
