@@ -10,7 +10,7 @@
 #' }
 oa_list <- function(...) {
   res <- httr::GET("http://results.openaddresses.io/state.txt", ...)
-  tt <- httr::content(res, "text")
+  tt <- httr::content(res, "text", encoding = "UTF-8")
   readr::read_tsv(tt)
 }
 # ht <- xml2::read_html(tt)
