@@ -3,7 +3,7 @@ Title: 'Openaddresses.io' Client for R
 Description: Openaddresses (<http://openaddresses.io/>) client. Search,
     fetch data, and combine datasets. Outputs are easy to visualize
     with base, ggplot2, or leaflet plots.
-Version: 0.0.4.9300
+Version: 0.0.4.9303
 Authors@R: person("Scott", "Chamberlain", role = c("aut","cre"),
     email = "myrmecocystus@gmail.com")
 License: MIT + file LICENSE
@@ -18,5 +18,6 @@ Imports:
     maptools
 Suggests:
     testthat,
-    leaflet
+    leaflet,
+    covr
 RoxygenNote: 5.0.1
