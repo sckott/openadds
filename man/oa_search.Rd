@@ -15,6 +15,9 @@ oa_search(country = NULL, state = NULL, city = NULL, ...)
 
 \item{...}{Pass on curl options to \code{\link[httr]{GET}}}
 }
+\value{
+a tibble (a data.frame)
+}
 \description{
 Search Openaddresses datasets
 }

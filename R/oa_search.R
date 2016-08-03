@@ -5,6 +5,7 @@
 #' @param state (characater) State (or province) name
 #' @param city (characater) City name
 #' @param ... Pass on curl options to \code{\link[httr]{GET}}
+#' @return a tibble (a data.frame)
 #' @examples \dontrun{
 #' # return all data in a data.frame
 #' oa_search()
@@ -27,7 +28,7 @@ oa_search <- function(country = NULL, state = NULL, city = NULL, ...) {
       c(c(locs[1:2], paste0(locs[3:4], collapse = "_")), "")
     } else if (length(locs) == 2) {
       try2 <- tryCatch(as.numeric(locs[2]), warning = function(w) w)
-      if (!is(try2, "warning")) {
+      if (!inherits(try2, "warning")) {
         c(locs[1], "", "", locs[2])
       } else {
         c(locs[1], "", locs[2], "")
@@ -37,16 +38,15 @@ oa_search <- function(country = NULL, state = NULL, city = NULL, ...) {
     } else {
       c(locs, "")
     }
-    setNames(data.frame(t(c(locs, y)), stringsAsFactors = FALSE),
+    stats::setNames(data.frame(t(c(locs, y)), stringsAsFactors = FALSE),
              c("country", "state", "city", "id", "url"))
   }, dd$source, dd$processed)
 
-  df <- dplyr::rbind_all(all)
-  if (length(comp(list(country, state, city))) == 0) {
-    return(df)
-  } else {
-    sub_set(df, list(country = country, state = state, city = city))
+  df <- dplyr::bind_rows(all)
+  if (length(comp(list(country, state, city))) != 0) {
+    df <- sub_set(df, list(country = country, state = state, city = city))
   }
+  tibble::as_data_frame(df)
 }
 
 sub_set <- function(df, x) {

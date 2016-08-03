@@ -15,8 +15,19 @@ as_openadd(country = NULL, state = NULL, city = NULL, ...)
 
 \item{...}{ignored}
 }
+\value{
+an object of class \code{openadd}
+}
 \description{
 Coerce to openadd object
+}
+\details{
+This is a helper function to let the user specify what they want
+with any combination of country, state, and city - the output of which
+can be passed to \code{\link{oa_get}} to get data.
+
+If your search results in more than 1 result, we stop with message to
+refine your search.
 }
 \examples{
 \dontrun{

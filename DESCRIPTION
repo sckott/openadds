@@ -1,21 +1,22 @@
 Package: openadds
-Title: 'Openaddresses.io' Client for R
-Description: Openaddresses (<http://openaddresses.io/>) client. Search,
+Title: Client to Access 'Openaddresses.io' Data
+Description: 'Openaddresses' (<http://openaddresses.io/>) client. Search,
     fetch data, and combine datasets. Outputs are easy to visualize
-    with base, ggplot2, or leaflet plots.
-Version: 0.0.4.9303
+    with base plots, 'ggplot2', or 'leaflet'.
+Version: 0.0.8.9000
 Authors@R: person("Scott", "Chamberlain", role = c("aut","cre"),
     email = "myrmecocystus@gmail.com")
 License: MIT + file LICENSE
 URL: https://github.com/sckott/openadds
-BugReports: http://www.github.com/sckott/openadds/issues
+BugReports: https://github.com/sckott/openadds/issues
 LazyData: true
 Imports:
-    httr (>= 1.0.0),
-    readr,
-    dplyr,
-    xml2,
-    maptools
+    httr (>= 1.2.1),
+    readr (>= 0.2.2),
+    dplyr (>= 0.5.0),
+    tibble (>= 1.1),
+    xml2 (>= 1.0.0),
+    maptools (>= 0.8-39)
 Suggests:
     testthat,
     leaflet,

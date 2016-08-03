@@ -6,6 +6,7 @@
 #' @param path Path to store files in, a directory, not the file name
 #' @param ... Pass on curl options to \code{\link[httr]{GET}}
 #'
+#' @return a tibble (a data.frame), with attributes for original url and path on disk
 #' @references \url{http://openaddresses.io/}
 #' @examples \dontrun{
 #' dat <- oa_list()
@@ -45,9 +46,11 @@ oa_get.openadd <- function(x, path = "~/.openadds", ...) {
 
 #' @export
 oa_get.character <- function(x, path = "~/.openadds", ...) {
-  resp <- oa_GET(url = x, fname = basename(x), path, ...)
-  structure(list(data = resp), class = c("oa", "data.frame"),
+  resp <- suppressWarnings(tibble::as_data_frame(oa_GET(url = x, fname = basename(x), path, ...)))
+  structure(resp, class = c("tbl_df", "data.frame", "oa"),
             id = x, path = make_path(basename(x), path))
+  # structure(list(data = resp), class = c("oa", "data.frame", "tbl_df"),
+  #           id = x, path = make_path(basename(x), path))
 }
 
 oa_GET <- function(url, fname, path, ...){
@@ -77,12 +80,12 @@ read_csv_ <- function(x) {
 
 read_zip_ <- function(fname, path) {
   exdir <- file.path(path, strsplit(basename(fname), "\\.")[[1]][[1]])
-  unzip(fname, exdir = exdir)
+  utils::unzip(fname, exdir = exdir)
   switch(file_type(exdir),
          csv = {
            files <- list.files(exdir, pattern = ".csv", full.names = TRUE, recursive = TRUE)
            if (length(files) > 1) stop('More than 1 csv file found', call. = FALSE)
-           readr::read_csv(files)
+           suppressMessages(readr::read_csv(files))
          },
          shp = read_shp(exdir))
 }
@@ -115,7 +118,14 @@ make_path <- function(x, path) {
 
 #' @export
 print.oa <- function(x, ..., n = 10) {
-  cat(sprintf("<Openaddresses data> %s", attr(x, "path")), sep = "\n")
-  cat(sprintf("Dimensions [%s, %s]\n", NROW(x$data), NCOL(x$data)), sep = "\n")
-  trunc_mat(x$data, n = n)
+  cat(sprintf("<Openaddresses data> %s", get_em(x)), sep = "\n")
+  print(x, n = n)
+}
+
+get_em <- function(x) {
+  paths <- attr(x, "path")
+  minl <- min(c(3, length(paths)))
+  tmp <- paste0(paths[1:minl], collapse = ", ")
+  xx <- substring(tmp, 1, 40)
+  if (nchar(tmp) > 40) paste0(xx, " ...") else xx
 }

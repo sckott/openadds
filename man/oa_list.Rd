@@ -10,7 +10,7 @@ oa_list(...)
 \item{...}{Pass on curl options to \code{\link[httr]{GET}}}
 }
 \value{
-A data.frame
+A tibble (a data.frame)
 }
 \description{
 List available data

@@ -13,6 +13,9 @@ oa_get(x, path = "~/.openadds", ...)
 
 \item{...}{Pass on curl options to \code{\link[httr]{GET}}}
 }
+\value{
+a tibble (a data.frame), with attributes for original url and path on disk
+}
 \description{
 Get data from Openaddresses
 }

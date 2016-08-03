@@ -25,7 +25,7 @@ test_that("oa_search works", {
 
   expect_named(aa, c('country', 'state', 'city', 'id', 'url'))
 
-  expect_more_than(NROW(aa), NROW(bb))
+  expect_gt(NROW(aa), NROW(bb))
 
   expect_equal(length(unique(aa$country)), 1)
   expect_equal(unique(aa$country), "us")

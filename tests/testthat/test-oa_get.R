@@ -10,7 +10,6 @@ test_that("oa_get works", {
 
   expect_is(aa, "data.frame")
   expect_is(aa, "oa")
-  expect_named(aa, "data")
   expect_equal(attr(aa, "id"), urls[3])
 
   # works for csv files
@@ -18,7 +17,6 @@ test_that("oa_get works", {
 
   expect_is(bb, "data.frame")
   expect_is(bb, "oa")
-  expect_named(bb, "data")
   expect_equal(attr(bb, "id"), urls[5])
 })
 
@@ -26,5 +24,5 @@ test_that("oa_get fails well", {
   skip_on_cran()
 
   expect_error(oa_get(), "no applicable method")
-  expect_error(oa_get("adfdf"))
+  expect_error(oa_get("adfdfasdfassdf"), "Couldn't resolve host name")
 })

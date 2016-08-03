@@ -7,20 +7,26 @@
 oa_combine(...)
 }
 \arguments{
-\item{...}{Data sets, all of class \code{oa}}
+\item{...}{Data sets, all need to be of class \code{oa}}
+}
+\value{
+a tibble (a data.frame) of all the inputs combined, with attributes for
+original urls and paths on disk
 }
 \description{
 Combine data helper
 }
 \details{
 Gives back a single \code{tbl_df}, with a subset of columns, currently
-\code{lon}, \code{lat}, and \code{address}
+\code{lon}, \code{lat}, and \code{address}.
+
+This function attempts to combine, but may fail sometimes.
 }
 \examples{
 \dontrun{
 dat <- oa_list()
 
-out1 <- oa_get(dat$processed[6])
+out1 <- oa_get(dat$processed[5])
 out2 <- oa_get(dat$processed[35])
 (alldat <- oa_combine(out1, out2))
 
@@ -31,6 +37,8 @@ out4 <- oa_get(dat$processed[788])
 x <- oa_get(dat$processed[534])
 y <- oa_get(dat$processed[349])
 (alldat <- oa_combine(x, y))
+
+
 library("leaflet")
 leaflet(alldat) \%>\%
   addTiles() \%>\%
