@@ -15,15 +15,16 @@
 #' out2 <- oa_get(dat$processed[35])
 #' (alldat <- oa_combine(out1, out2))
 #'
-#' out3 <- oa_get(dat$processed[368])
 #' out4 <- oa_get(dat$processed[788])
-#' (alldat <- oa_combine(out1, out2))
+#' (alldat <- oa_combine(out2, out4))
 #'
 #' x <- oa_get(dat$processed[534])
 #' y <- oa_get(dat$processed[349])
 #' (alldat <- oa_combine(x, y))
 #'
-#'
+#' if (!requireNamespace("leaflet")) {
+#'   install.packages("leaflet")
+#' }
 #' library("leaflet")
 #' leaflet(alldat) %>%
 #'   addTiles() %>%

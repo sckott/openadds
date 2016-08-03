@@ -26,7 +26,6 @@ Get data from Openaddresses
 dat <- oa_list()
 urls <- na.omit(dat$processed)
 (out1 <- oa_get(urls[6]))
-(out2 <- oa_get(urls[12]))
 (out3 <- oa_get(urls[32]))
 (out4 <- oa_get(urls[876]))
 (out5 <- oa_get(urls[376]))
@@ -42,8 +41,11 @@ oa_get(as_openadd(country="us", state="nv", city="las_vegas"))
 (alldat <- oa_combine(out1, out3))
 
 # Map data
+if (!requireNamespace("leaflet")) {
+  install.packages("leaflet")
+}
 library("leaflet")
-small <- out9$data[1:10000L, ]
+small <- out9[1:10000L, ]
 leaflet(small) \%>\%
   addTiles() \%>\%
   addCircles(lat = ~LAT, lng = ~LON,

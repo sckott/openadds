@@ -23,6 +23,11 @@ test_that("oa_get works", {
 test_that("oa_get fails well", {
   skip_on_cran()
 
-  expect_error(oa_get(), "no applicable method")
-  expect_error(oa_get("adfdfasdfassdf"), "Couldn't resolve host name")
+  expect_error(oa_get(), "argument \"x\" is missing")
+  expect_error(oa_get("adfdfasdfassdf"), "input doesn't appear to be an Openaddresses URL")
+
+  expect_error(oa_get(NA_character_), "input was NULL or NA")
+
+  expect_error(oa_get(5), "no 'oa_get' method")
+  expect_error(oa_get(NA), "no 'oa_get' method")
 })

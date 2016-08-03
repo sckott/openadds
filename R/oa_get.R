@@ -14,7 +14,6 @@
 #' dat <- oa_list()
 #' urls <- na.omit(dat$processed)
 #' (out1 <- oa_get(urls[6]))
-#' (out2 <- oa_get(urls[12]))
 #' (out3 <- oa_get(urls[32]))
 #' (out4 <- oa_get(urls[876]))
 #' (out5 <- oa_get(urls[376]))
@@ -30,8 +29,11 @@
 #' (alldat <- oa_combine(out1, out3))
 #'
 #' # Map data
+#' if (!requireNamespace("leaflet")) {
+#'   install.packages("leaflet")
+#' }
 #' library("leaflet")
-#' small <- out9$data[1:10000L, ]
+#' small <- out9[1:10000L, ]
 #' leaflet(small) %>%
 #'   addTiles() %>%
 #'   addCircles(lat = ~LAT, lng = ~LON,
@@ -39,6 +41,11 @@
 #' }
 oa_get <- function(x, overwrite = FALSE, ...) {
   UseMethod("oa_get")
+}
+
+#' @export
+oa_get.default <- function(x, overwrite = FALSE, ...) {
+  stop("no 'oa_get' method for class ", class(x), call. = FALSE)
 }
 
 #' @export
@@ -56,6 +63,8 @@ oa_get.character <- function(x, overwrite = FALSE, ...) {
 }
 
 oa_GET <- function(url, fname, ...){
+  if (is.null(url) || is.na(url)) stop("input was NULL or NA", call. = FALSE)
+  if (!grepl("https?://|data\\.openaddresses\\.io", url)) stop("input doesn't appear to be an Openaddresses URL", call. = FALSE)
   make_basedir(oa_cache_path())
   file <- make_path(fname)
   if ( file.exists(path.expand(file)) ) {

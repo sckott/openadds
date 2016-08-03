@@ -14,6 +14,7 @@
 #' @return an object of class \code{openadd}
 #' @examples \dontrun{
 #' as_openadd(country="us", state="nv", city="las_vegas")
+#' as_openadd(country="us", state="mi", city="detroit")
 #' }
 as_openadd <- function(country = NULL, state = NULL, city = NULL, ...) {
   tmp <- oa_search(country, state, city)
