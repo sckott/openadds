@@ -3,7 +3,7 @@ Title: Client to Access 'Openaddresses.io' Data
 Description: 'Openaddresses' (<http://openaddresses.io/>) client. Search,
     fetch data, and combine datasets. Outputs are easy to visualize
     with base plots, 'ggplot2', or 'leaflet'.
-Version: 0.0.8.9000
+Version: 0.1.0
 Authors@R: person("Scott", "Chamberlain", role = c("aut","cre"),
     email = "myrmecocystus@gmail.com")
 License: MIT + file LICENSE
