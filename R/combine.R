@@ -33,8 +33,11 @@ oa_combine <- function(...) {
   cb <- list(...)
   classes <- vapply(cb, inherits, logical(1), what = "oa")
   if (!all(classes)) stop("all inputs must be of class 'oa'", call. = FALSE)
+
   ids <- vapply(cb, attr, "", which = "id")
   paths <- vapply(cb, attr, "", which = "path")
+  readmes <- vapply(cb, attr, "", which = "readme")
+
   locnames <- lapply(lapply(cb, function(z) names(z)), guess_latlon)
   addname <- lapply(lapply(cb, function(z) names(z)), guess_address)
   out <- list()
@@ -56,5 +59,5 @@ oa_combine <- function(...) {
   }
   structure(dplyr::bind_rows(out),
             class = c("tbl_df", "data.frame", "oa"),
-            id = ids, path = paths)
+            id = ids, path = paths, readme = readmes)
 }

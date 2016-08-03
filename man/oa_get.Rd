@@ -4,12 +4,14 @@
 \alias{oa_get}
 \title{Get data from Openaddresses}
 \usage{
-oa_get(x, path = "~/.openadds", ...)
+oa_get(x, overwrite = FALSE, ...)
 }
 \arguments{
-\item{x}{URL for an openaddresses dataset, or an object of class openadd}
+\item{x}{(character) URL for an openaddresses dataset, or an object of
+class openadd}
 
-\item{path}{Path to store files in, a directory, not the file name}
+\item{overwrite}{(logical) Will only overwrite existing path
+if \code{TRUE}}
 
 \item{...}{Pass on curl options to \code{\link[httr]{GET}}}
 }

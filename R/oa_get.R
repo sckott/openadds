@@ -2,8 +2,10 @@
 #'
 #' @export
 #'
-#' @param x URL for an openaddresses dataset, or an object of class openadd
-#' @param path Path to store files in, a directory, not the file name
+#' @param x (character) URL for an openaddresses dataset, or an object of
+#' class openadd
+#' @param overwrite	(logical) Will only overwrite existing path
+#' if \code{TRUE}
 #' @param ... Pass on curl options to \code{\link[httr]{GET}}
 #'
 #' @return a tibble (a data.frame), with attributes for original url and path on disk
@@ -35,59 +37,60 @@
 #'   addCircles(lat = ~LAT, lng = ~LON,
 #'              popup = unname(apply(small[, c('NUMBER', 'STREET')], 1, paste, collapse = " ")))
 #' }
-oa_get <- function(x, path = "~/.openadds", ...) {
+oa_get <- function(x, overwrite = FALSE, ...) {
   UseMethod("oa_get")
 }
 
 #' @export
-oa_get.openadd <- function(x, path = "~/.openadds", ...) {
+oa_get.openadd <- function(x, overwrite = FALSE, ...) {
   oa_get(x[[1]], ...)
 }
 
 #' @export
-oa_get.character <- function(x, path = "~/.openadds", ...) {
-  resp <- suppressWarnings(tibble::as_data_frame(oa_GET(url = x, fname = basename(x), path, ...)))
+oa_get.character <- function(x, overwrite = FALSE, ...) {
+  resp <- suppressWarnings(tibble::as_data_frame(oa_GET(url = x, fname = basename(x), ...)))
   structure(resp, class = c("tbl_df", "data.frame", "oa"),
-            id = x, path = make_path(basename(x), path))
-  # structure(list(data = resp), class = c("oa", "data.frame", "tbl_df"),
-  #           id = x, path = make_path(basename(x), path))
+            id = x,
+            path = make_path(basename(x)),
+            readme = read_me(x))
 }
 
-oa_GET <- function(url, fname, path, ...){
-  make_basedir(path)
-  file <- make_path(fname, path)
+oa_GET <- function(url, fname, ...){
+  make_basedir(oa_cache_path())
+  file <- make_path(fname)
   if ( file.exists(path.expand(file)) ) {
     ff <- file
     message("Reading from cached data")
   } else {
-    res <- GET(url, write_disk(file, TRUE))
+    res <- httr::GET(url, write_disk(file, TRUE))
     stop_for_status(res)
     ff <- res$request$output$path
   }
   switch(strextract(basename(ff), "\\zip|csv"),
          csv = read_csv_(ff),
-         zip = read_zip_(ff, path)
+         zip = read_zip_(ff)
   )
 }
 
-make_basedir <- function(path) {
-  dir.create(path, showWarnings = FALSE, recursive = TRUE)
-}
+make_path <- function(x) file.path(oa_cache_path(), x)
 
-read_csv_ <- function(x) {
-  readr::read_csv(x)
-}
+make_basedir <- function(path) dir.create(path, showWarnings = FALSE, recursive = TRUE)
 
-read_zip_ <- function(fname, path) {
-  exdir <- file.path(path, strsplit(basename(fname), "\\.")[[1]][[1]])
+read_csv_ <- function(x) readr::read_csv(x)
+
+read_zip_ <- function(fname) {
+  exdir <- file.path(oa_cache_path(), strsplit(basename(fname), "\\.")[[1]][[1]])
   utils::unzip(fname, exdir = exdir)
-  switch(file_type(exdir),
-         csv = {
-           files <- list.files(exdir, pattern = ".csv", full.names = TRUE, recursive = TRUE)
-           if (length(files) > 1) stop('More than 1 csv file found', call. = FALSE)
-           suppressMessages(readr::read_csv(files))
-         },
-         shp = read_shp(exdir))
+  on.exit(unlink(fname))
+  switch(
+    file_type(exdir),
+    csv = {
+      files <- list.files(exdir, pattern = ".csv", full.names = TRUE, recursive = TRUE)
+      if (length(files) > 1) stop('More than 1 csv file found', call. = FALSE)
+      suppressMessages(readr::read_csv(files))
+    },
+    shp = read_shp(exdir)
+  )
 }
 
 read_shp <- function(dir) {
@@ -101,6 +104,16 @@ read_shp <- function(dir) {
   tmp@data
 }
 
+read_me <- function(x) {
+  dir <- sub("\\.zip|\\.csv", "", make_path(basename(x)))
+  ff <- list.files(dir, pattern = "README", ignore.case = TRUE, full.names = TRUE)
+  if (length(ff) == 0) {
+    return(NULL)
+  } else {
+    return(paste0(readLines(ff), collapse = "\n"))
+  }
+}
+
 file_type <- function(b) {
   ff <- basename(list.files(b, full.names = TRUE, recursive = TRUE))
   if (any(grepl("\\.csv", ff))) {
@@ -110,10 +123,6 @@ file_type <- function(b) {
   } else {
     stop("not file type csv or shp", call. = FALSE)
   }
-}
-
-make_path <- function(x, path) {
-  file.path(path, x)
 }
 
 #' @export
