@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 [![Build Status](https://travis-ci.org/sckott/openadds.svg)](https://travis-ci.org/sckott/openadds)
 [![codecov.io](https://codecov.io/github/sckott/openadds/coverage.svg?branch=master)](https://codecov.io/github/sckott/openadds?branch=master)
 
-`openadds` is an R client for data from [Openaddresses.io](http://openaddresses.io/). Data comes from [http://data.openaddresses.io](http://data.openaddresses.io). 
+`openadds` is an R client for data from [Openaddresses.io](http://openaddresses.io/). Data comes from <http://data.openaddresses.io>. 
 
 The reason for creating this R client is that the data coming from OpenAddresses is heterogenous in many ways:
 
@@ -57,7 +57,7 @@ oa_search(country = "us", state = "ca")
 Passing in a URL
 
 ```{r}
-(out1 <- oa_get(dat$processed[6]))
+(out1 <- oa_get(dat$processed[5]))
 ```
 
 First getting URL for dataset through `as_openadd()`, then passing to `oa_get()`
@@ -89,9 +89,15 @@ Make an interactive map
 
 ```{r eval=FALSE}
 library("leaflet")
-leaflet(data = x$data) %>%
+leaflet(x) %>%
   addTiles() %>%
   addCircles(lat = ~LAT, lng = ~LON, popup = ~STREET)
 ```
 
 ![map1](inst/img/map.png)
+
+## Meta
+
+* Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+* Please [report any issues or bugs](https://github.com/sckott/openadds/issues)
+* License: MIT 
