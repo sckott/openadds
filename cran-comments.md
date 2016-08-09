@@ -16,12 +16,11 @@
 
 ## Reverse dependencies
 
-This is a new release, so there are no reverse dependencies.
-
-I have read and agree to the the CRAN policies at 
-http://cran.r-project.org/web/packages/policies.html
+There are no reverse dependencies.
 
 --------
+
+This submission fixes a bug by requiring newest version of a dependency.
   
 Thanks!
 Scott Chamberlain
