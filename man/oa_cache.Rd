@@ -10,9 +10,9 @@
 \usage{
 oa_cache_list()
 
-oa_cache_delete(files, force = FALSE)
+oa_cache_delete(files, force = TRUE)
 
-oa_cache_delete_all(force = FALSE)
+oa_cache_delete_all(force = TRUE)
 
 oa_cache_details(files = NULL)
 }

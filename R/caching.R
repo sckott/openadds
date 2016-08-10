@@ -32,36 +32,43 @@
 #' @export
 #' @rdname oa_cache
 oa_cache_list <- function() {
-  list.files(oa_cache_path(), pattern = ".csv|.zip|.shp", ignore.case = TRUE, recursive = TRUE)
+  list.files(oa_cache_path(), pattern = ".csv|.zip|.shp|.geojson", ignore.case = TRUE,
+             recursive = TRUE, full.names = TRUE)
 }
 
 #' @export
 #' @rdname oa_cache
-oa_cache_delete <- function(files, force = FALSE) {
+oa_cache_delete <- function(files, force = TRUE) {
   if (!all(file.exists(files))) {
     stop("These files don't exist or can't be found: \n",
          strwrap(files[!file.exists(files)], indent = 5), call. = FALSE)
   }
-  unlink(files, force = force)
+  # find parent folder
+  dirs <- list.files(oa_cache_path(), full.names = TRUE)
+  files_dir <- unlist(lapply(files, function(z) {
+    dirs[vapply(dirs, function(x) grepl(x, z), logical(1))]
+  }))
+  # delete it
+  unlink(files_dir, force = force, recursive = TRUE)
 }
 
 #' @export
 #' @rdname oa_cache
-oa_cache_delete_all <- function(force = FALSE) {
-  files <- list.files(oa_cache_path(), pattern = ".csv|.zip|.shp", ignore.case = TRUE,
-                      full.names = TRUE, recursive = TRUE)
-  unlink(files, force = force)
+oa_cache_delete_all <- function(force = TRUE) {
+  # files <- list.files(oa_cache_path(), pattern = ".csv|.zip|.shp|.geojson", ignore.case = TRUE,
+  #                     full.names = TRUE, recursive = TRUE)
+  dirs <- list.files(oa_cache_path(), full.names = TRUE)
+  unlink(dirs, force = force, recursive = TRUE)
 }
 
 #' @export
 #' @rdname oa_cache
 oa_cache_details <- function(files = NULL) {
   if (is.null(files)) {
-    files <- list.files(oa_cache_path(), pattern = ".csv|.zip|.shp", ignore.case = TRUE,
+    files <- list.files(oa_cache_path(), pattern = ".csv|.zip|.shp|.geojson", ignore.case = TRUE,
                         full.names = TRUE, recursive = TRUE)
     structure(lapply(files, file_info_), class = "oa_cache_info")
   } else {
-    files <- file.path(oa_cache_path(), files)
     structure(lapply(files, file_info_), class = "oa_cache_info")
   }
 }
