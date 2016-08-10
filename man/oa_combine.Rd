@@ -35,7 +35,9 @@ out4 <- oa_get(dat$processed[788])
 
 x <- oa_get(dat$processed[534])
 y <- oa_get(dat$processed[349])
-(alldat <- oa_combine(x, y))
+z <- oa_get(dat$processed[449])
+zz <- oa_get(dat$processed[549])
+(alldat <- oa_combine(x, y, z, zz))
 
 if (!requireNamespace("leaflet")) {
   install.packages("leaflet")

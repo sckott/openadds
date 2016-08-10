@@ -55,37 +55,50 @@ oa_get.openadd <- function(x, overwrite = FALSE, ...) {
 
 #' @export
 oa_get.character <- function(x, overwrite = FALSE, ...) {
-  resp <- suppressWarnings(tibble::as_data_frame(oa_GET(url = x, fname = basename(x), ...)))
-  structure(resp, class = c("tbl_df", "data.frame", "oa"),
+  resp <- oa_GET(x, ...)
+  structure(resp, class = "oa",
             id = x,
             path = make_path(basename(x)),
-            readme = read_me(x))
+            readme = read_me(x),
+            name = get_name(x))
+  # structure(resp, class = c("tbl_df", "data.frame", "oa"),
+  #           id = x,
+  #           path = make_path(basename(x)),
+  #           readme = read_me(x))
 }
 
-oa_GET <- function(url, fname, ...){
+oa_GET <- function(url, ...){
   if (is.null(url) || is.na(url)) stop("input was NULL or NA", call. = FALSE)
   if (!grepl("https?://|data\\.openaddresses\\.io", url)) stop("input doesn't appear to be an Openaddresses URL", call. = FALSE)
   make_basedir(oa_cache_path())
-  file <- make_path(fname)
+  file <- make_path(url)
   if ( file.exists(path.expand(file)) ) {
     ff <- file
     message("Reading from cached data")
   } else {
-    res <- httr::GET(url, write_disk(file, TRUE))
+    res <- httr::GET(url, write_disk(file, TRUE), ...)
     stop_for_status(res)
     ff <- res$request$output$path
   }
-  switch(strextract(basename(ff), "\\zip|csv"),
+  switch(strextract(basename(ff), "\\zip|csv|geojson"),
          csv = read_csv_(ff),
-         zip = read_zip_(ff)
+         zip = read_zip_(ff),
+         geojson = read_geojson_(ff)
   )
 }
 
-make_path <- function(x) file.path(oa_cache_path(), x)
+get_name <- function(x) gsub("\\..+", "", basename(x))
+
+make_path <- function(x) {
+  # file.path(oa_cache_path(), x)
+  xx <- grep("[A-Za-z]", strsplit(x, "/")[[1]], value = TRUE)
+  xx <- xx[!grepl("http|openaddresses|runs", xx)]
+  file.path(oa_cache_path(), paste0(xx, collapse = "_"))
+}
 
 make_basedir <- function(path) dir.create(path, showWarnings = FALSE, recursive = TRUE)
 
-read_csv_ <- function(x) readr::read_csv(x)
+read_csv_ <- function(x) suppressMessages(readr::read_csv(x))
 
 read_zip_ <- function(fname) {
   exdir <- file.path(oa_cache_path(), strsplit(basename(fname), "\\.")[[1]][[1]])
@@ -95,26 +108,38 @@ read_zip_ <- function(fname) {
     file_type(exdir),
     csv = {
       files <- list.files(exdir, pattern = ".csv", full.names = TRUE, recursive = TRUE)
-      if (length(files) > 1) stop('More than 1 csv file found', call. = FALSE)
-      suppressMessages(readr::read_csv(files))
+      #if (length(files) > 1) stop('More than 1 csv file found', call. = FALSE)
+      lapply(files, read_csv_)
     },
-    shp = read_shp(exdir)
+    shp = {
+      files <- list.files(exdir, pattern = ".shp", full.names = TRUE, recursive = TRUE)
+      lapply(files, read_shp_)
+    },
+    geojson = {
+      files <- list.files(exdir, pattern = ".geojson", full.names = TRUE, recursive = TRUE)
+      #if (length(files) > 1) stop('More than 1 csv file found', call. = FALSE)
+      lapply(files, read_geojson_)
+    }
   )
 }
 
-read_shp <- function(dir) {
-  shpfile <- list.files(dir, pattern = ".shp", full.names = TRUE, recursive = TRUE)
-  if (length(shpfile) != 1) {
-    shpfile2 <- grep("\\.shp$", shpfile, value = TRUE)
-    shpfile <- shpfile2[1]
-    message("Many shp files, using \n", shpfile2[1], "\n others available:\n", shpfile2[-1])
-  }
-  tmp <- maptools::readShapeSpatial(shpfile)
-  tmp@data
+read_geojson_ <- function(x) {
+  tibble::as_data_frame(jsonlite::fromJSON(x, flatten = TRUE)$features)
+}
+
+read_shp_ <- function(x) {
+  # shpfile <- list.files(dir, pattern = ".shp", full.names = TRUE, recursive = TRUE)
+  # if (length(shpfile) != 1) {
+  #   shpfile2 <- grep("\\.shp$", shpfile, value = TRUE)
+  #   shpfile <- shpfile2[1]
+  #   message("Many shp files, using \n", shpfile2[1], "\n others available:\n", shpfile2[-1])
+  # }
+  tmp <- maptools::readShapeSpatial(x)
+  tibble::as_data_frame(tmp@data)
 }
 
 read_me <- function(x) {
-  dir <- sub("\\.zip|\\.csv", "", make_path(basename(x)))
+  dir <- sub("\\.zip|\\.csv|\\.geojson", "", make_path(x))
   ff <- list.files(dir, pattern = "README", ignore.case = TRUE, full.names = TRUE)
   if (length(ff) == 0) {
     return(NULL)
@@ -129,15 +154,20 @@ file_type <- function(b) {
     "csv"
   } else if (any(grepl("\\.shp", ff))) {
     "shp"
+  } else if (any(grepl("\\.geojson", ff))) {
+    "geojson"
   } else {
-    stop("not file type csv or shp", call. = FALSE)
+    stop("no acceptable file types found: csv/geojson/shp", call. = FALSE)
   }
 }
 
 #' @export
 print.oa <- function(x, ..., n = 10) {
-  cat(sprintf("<Openaddresses data> %s", get_em(x)), sep = "\n")
-  print(x, n = n)
+  cat(paste0("<Openaddresses data> ", attr(x, "name")), sep = "\n")
+  cat(sprintf("paths: %s", get_em(x)), sep = "\n")
+  cat(paste0("data set sizes (NROW): ", paste0(vapply(x, NROW, 1), collapse = ", ")), sep = "\n")
+  cat("first data_frame ...  ", sep = "\n")
+  print(x[[1]], n = n)
 }
 
 get_em <- function(x) {

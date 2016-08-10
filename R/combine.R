@@ -20,7 +20,9 @@
 #'
 #' x <- oa_get(dat$processed[534])
 #' y <- oa_get(dat$processed[349])
-#' (alldat <- oa_combine(x, y))
+#' z <- oa_get(dat$processed[449])
+#' zz <- oa_get(dat$processed[549])
+#' (alldat <- oa_combine(x, y, z, zz))
 #'
 #' if (!requireNamespace("leaflet")) {
 #'   install.packages("leaflet")
@@ -39,12 +41,16 @@ oa_combine <- function(...) {
   paths <- vapply(cb, attr, "", which = "path")
   readmes <- vapply(cb, attr, "", which = "readme")
 
-  locnames <- lapply(lapply(cb, function(z) names(z)), guess_latlon)
-  addname <- lapply(lapply(cb, function(z) names(z)), guess_address)
+  # unnest list of data.frames
+  cbdat <- unlist(cb, recursive = FALSE)
+
+  locnames <- lapply(lapply(cbdat, function(z) names(z)), guess_latlon)
+  addname <- lapply(lapply(cbdat, function(z) names(z)), guess_address)
+
   out <- list()
-  for (i in seq_along(cb)) {
+  for (i in seq_along(cbdat)) {
     if (!is.null(locnames[[i]])) {
-      tmp <- cb[[i]][, unname(unlist(c(locnames[[i]], addname[[i]]))) ]
+      tmp <- cbdat[[i]][, unname(unlist(c(locnames[[i]], addname[[i]]))) ]
       nms <- c('lon', 'lat', 'address')
       nms <- if (length(addname[[i]]) == 1) {
         out[[i]] <- stats::setNames(tmp, nms)
@@ -55,7 +61,6 @@ oa_combine <- function(...) {
         }
         out[[i]] <- stats::setNames(tmp, nms)
       }
-      out[[i]]$dataset <- basename(attr(cb[[i]], "path"))
     }
   }
   structure(dplyr::bind_rows(out),
