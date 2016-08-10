@@ -58,13 +58,9 @@ oa_get.character <- function(x, overwrite = FALSE, ...) {
   resp <- oa_GET(x, ...)
   structure(resp, class = "oa",
             id = x,
-            path = make_path(basename(x)),
+            path = make_path(x),
             readme = read_me(x),
             name = get_name(x))
-  # structure(resp, class = c("tbl_df", "data.frame", "oa"),
-  #           id = x,
-  #           path = make_path(basename(x)),
-  #           readme = read_me(x))
 }
 
 oa_GET <- function(url, ...){
@@ -81,16 +77,15 @@ oa_GET <- function(url, ...){
     ff <- res$request$output$path
   }
   switch(strextract(basename(ff), "\\zip|csv|geojson"),
-         csv = read_csv_(ff),
+         csv = list(read_csv_(ff)),
          zip = read_zip_(ff),
-         geojson = read_geojson_(ff)
+         geojson = list(read_geojson_(ff))
   )
 }
 
 get_name <- function(x) gsub("\\..+", "", basename(x))
 
 make_path <- function(x) {
-  # file.path(oa_cache_path(), x)
   xx <- grep("[A-Za-z]", strsplit(x, "/")[[1]], value = TRUE)
   xx <- xx[!grepl("http|openaddresses|runs", xx)]
   file.path(oa_cache_path(), paste0(xx, collapse = "_"))
@@ -108,7 +103,6 @@ read_zip_ <- function(fname) {
     file_type(exdir),
     csv = {
       files <- list.files(exdir, pattern = ".csv", full.names = TRUE, recursive = TRUE)
-      #if (length(files) > 1) stop('More than 1 csv file found', call. = FALSE)
       lapply(files, read_csv_)
     },
     shp = {
@@ -117,7 +111,6 @@ read_zip_ <- function(fname) {
     },
     geojson = {
       files <- list.files(exdir, pattern = ".geojson", full.names = TRUE, recursive = TRUE)
-      #if (length(files) > 1) stop('More than 1 csv file found', call. = FALSE)
       lapply(files, read_geojson_)
     }
   )
@@ -128,12 +121,6 @@ read_geojson_ <- function(x) {
 }
 
 read_shp_ <- function(x) {
-  # shpfile <- list.files(dir, pattern = ".shp", full.names = TRUE, recursive = TRUE)
-  # if (length(shpfile) != 1) {
-  #   shpfile2 <- grep("\\.shp$", shpfile, value = TRUE)
-  #   shpfile <- shpfile2[1]
-  #   message("Many shp files, using \n", shpfile2[1], "\n others available:\n", shpfile2[-1])
-  # }
   tmp <- maptools::readShapeSpatial(x)
   tibble::as_data_frame(tmp@data)
 }

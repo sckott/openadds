@@ -20,7 +20,7 @@ test_that("oa_combine works", {
 
   expect_gt(NROW(aa), NROW(out1))
   expect_gt(NROW(aa), NROW(out2))
-  expect_gt(NROW(out1), NROW(out2))
+  expect_gt(NROW(out1[[1]]), NROW(out2[[1]]))
 })
 
 test_that("oa_combine fails well", {

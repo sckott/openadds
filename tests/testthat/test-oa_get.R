@@ -16,28 +16,28 @@ test_that("oa_get works", {
   # works for zip files
   aa <- oa_get(urls[3])
 
-  expect_is(aa, "data.frame")
   expect_is(aa, "oa")
+  expect_is(aa[[1]], "data.frame")
   expect_equal(attr(aa, "id"), urls[3])
 
   # works for csv files
   bb <- suppressWarnings(oa_get(urls[5]))
 
-  expect_is(bb, "data.frame")
   expect_is(bb, "oa")
+  expect_is(bb[[1]], "data.frame")
   expect_equal(attr(bb, "id"), urls[5])
 
   # works for geojson files
   cc <- oa_get(urls[2])
 
-  expect_is(cc, "data.frame")
   expect_is(cc, "oa")
+  expect_is(cc[[1]], "data.frame")
   expect_equal(attr(cc, "id"), urls[2])
   # geojson data exists
-  expect_true("geometry.type" %in% names(cc))
-  expect_true("geometry.coordinates" %in% names(cc))
-  expect_is(cc$geometry.coordinates[[1]], "array")
-  expect_type(cc$geometry.coordinates[[1]][,,1], "double")
+  expect_true("geometry.type" %in% names(cc[[1]]))
+  expect_true("geometry.coordinates" %in% names(cc[[1]]))
+  expect_is(cc[[1]]$geometry.coordinates[[1]], "array")
+  expect_type(cc[[1]]$geometry.coordinates[[1]][,,1], "double")
 })
 
 test_that("oa_get fails well", {

@@ -41,6 +41,10 @@ oa_combine <- function(...) {
   paths <- vapply(cb, attr, "", which = "path")
   readmes <- vapply(cb, attr, "", which = "readme")
 
+  dnames <- unlist(lapply(cb, function(z) {
+    rep(attr(z, "name"), length(z))
+  }))
+
   # unnest list of data.frames
   cbdat <- unlist(cb, recursive = FALSE)
 
@@ -61,6 +65,7 @@ oa_combine <- function(...) {
         }
         out[[i]] <- stats::setNames(tmp, nms)
       }
+      out[[i]]$dataset <- dnames[i]
     }
   }
   structure(dplyr::bind_rows(out),
