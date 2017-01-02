@@ -13,7 +13,6 @@ test_that("oa_list works", {
 test_that("oa_list fails well", {
   skip_on_cran()
 
-  library("httr")
-  expect_error(oa_list("asdfad"), "no applicable method")
-  expect_error(oa_list(config = timeout(0.001)), "Timeout was reached")
+  library("crul")
+  expect_error(oa_list(timeout_ms = 1), "Timeout was reached")
 })

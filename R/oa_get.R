@@ -69,9 +69,10 @@ oa_GET <- function(url, ...){
     ff <- file
     message("Reading from cached data")
   } else {
-    res <- httr::GET(url, write_disk(file, TRUE), ...)
-    stop_for_status(res)
-    ff <- res$request$output$path
+    cli <- crul::HttpClient$new(url = url, opts = list(...))
+    temp <- cli$get(disk = file)
+    temp$raise_for_status()
+    ff <- temp$content
   }
   switch(strextract(basename(ff), "\\zip|csv|geojson"),
          csv = list(read_csv_(ff)),

@@ -1,15 +1,18 @@
 #' List available data
 #'
 #' @export
-#' @param ... Pass on curl options to \code{\link[httr]{GET}}
+#' @param ... Pass on curl options to \code{\link[crul]{HttpClient}}
 #' @return A tibble (a data.frame)
 #' @examples \dontrun{
 #' (res <- oa_list())
-#' # mean address count
+#'
+#' # mean address count per state/country/etc
 #' mean(res$`address count`, na.rm = TRUE)
 #' }
 oa_list <- function(...) {
-  res <- httr::GET("http://results.openaddresses.io/state.txt", ...)
-  tt <- httr::content(res, "text", encoding = "UTF-8")
-  readr::read_tsv(tt)
+  cli <- crul::HttpClient$new(url = "http://results.openaddresses.io/state.txt",
+                        opts = list(...))
+  temp <- cli$get()
+  temp$raise_for_status()
+  readr::read_tsv(temp$parse())
 }

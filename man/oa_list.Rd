@@ -7,7 +7,7 @@
 oa_list(...)
 }
 \arguments{
-\item{...}{Pass on curl options to \code{\link[httr]{GET}}}
+\item{...}{Pass on curl options to \code{\link[crul]{HttpClient}}}
 }
 \value{
 A tibble (a data.frame)
@@ -18,7 +18,8 @@ List available data
 \examples{
 \dontrun{
 (res <- oa_list())
-# mean address count
+
+# mean address count per state/country/etc
 mean(res$`address count`, na.rm = TRUE)
 }
 }
