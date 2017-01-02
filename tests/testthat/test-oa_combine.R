@@ -4,8 +4,10 @@ test_that("oa_combine works", {
   skip_on_cran()
 
   dat <- oa_list()
-	out1 <- suppressMessages(oa_get(dat$processed[5]))
-	out2 <- suppressMessages(oa_get(dat$processed[37]))
+	#out1 <- suppressMessages(oa_get(na.omit(dat$processed)[5]))
+	#out2 <- suppressMessages(oa_get(na.omit(dat$processed)[37]))
+  out1 <- suppressMessages(oa_get("http://data.openaddresses.io/runs/142783/ca/bc/langley.zip"))
+  out2 <- suppressWarnings(oa_get("http://data.openaddresses.io/runs/142586/ca/on/belleville.zip"))
 	aa <- suppressMessages(oa_combine(out1, out2))
 
 	expect_is(aa, "oa")

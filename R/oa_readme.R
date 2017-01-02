@@ -21,15 +21,18 @@ oa_readme <- function(x) {
   UseMethod("oa_readme")
 }
 
+#' @export
 oa_readme.default <- function(x) {
   stop("no 'oa_readme' method for class ", class(x), call. = FALSE)
 }
 
+#' @export
 oa_readme.oa <- function(x) {
   xx <- attr(x, "readme")
   if (is.null(xx)) return("") else return(xx)
 }
 
+#' @export
 oa_readme.list <- function(x) {
   classes <- vapply(x, inherits, logical(1), what = "oa")
   if (!all(classes)) stop("all inputs must be of class 'oa'", call. = FALSE)

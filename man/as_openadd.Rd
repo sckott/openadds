@@ -32,7 +32,9 @@ refine your search.
 \examples{
 \dontrun{
 as_openadd(country="us", state="nv", city="las_vegas")
-as_openadd(country="us", state="mi", city="detroit")
+
+# too coarse, will ask you to refine your search
+# as_openadd(country="us", state="mi", city="detroit")
 }
 }
 

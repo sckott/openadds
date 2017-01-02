@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 [![cran version](http://www.r-pkg.org/badges/version/openadds)](https://cran.r-project.org/package=openadds)
 
 
-`openadds` is an R client for data from [Openaddresses.io](http://openaddresses.io/). Data comes from <http://data.openaddresses.io>.
+`openadds` is an R client for data from [Openaddresses.io](https://openaddresses.io/). Data comes from <http://results.openaddresses.io/>.
 
 The reason for creating this R client is that the data coming from OpenAddresses is heterogenous in many ways:
 

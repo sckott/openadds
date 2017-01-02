@@ -16,43 +16,38 @@ if \code{TRUE}}
 \item{...}{Pass on curl options to \code{\link[httr]{GET}}}
 }
 \value{
-a tibble (a data.frame), with attributes for original url and path on disk
+a tibble (a data.frame), with attributes for original url and path
+on disk
 }
 \description{
 Get data from Openaddresses
 }
 \examples{
 \dontrun{
-dat <- oa_list()
-urls <- na.omit(dat$processed)
-(out1 <- oa_get(urls[6]))
-(out3 <- oa_get(urls[32]))
-(out4 <- oa_get(urls[876]))
-(out5 <- oa_get(urls[376]))
-(out6 <- oa_get(urls[474]))
-(out7 <- oa_get(urls[121]))
-(out8 <- oa_get(urls[41]))
-(out9 <- oa_get(urls[400]))
+(out1 <- oa_get("http://data.openaddresses.io/runs/142103/at/tirol.zip"))
+(out2 <-
+  oa_get("http://data.openaddresses.io/runs/142676/ca/bc/victoria.zip"))
 
 # from a openadd class object
 oa_get(as_openadd(country="us", state="nv", city="las_vegas"))
 
 # combine data sets
-(alldat <- oa_combine(out1, out3))
+(alldat <- oa_combine(out1, out2))
 
 # Map data
 if (!requireNamespace("leaflet")) {
   install.packages("leaflet")
 }
-library("leaflet")
-small <- out9[1:10000L, ]
+library(leaflet)
+small <- out2[[1]][1:5000,]
 leaflet(small) \%>\%
   addTiles() \%>\%
   addCircles(lat = ~LAT, lng = ~LON,
-             popup = unname(apply(small[, c('NUMBER', 'STREET')], 1, paste, collapse = " ")))
+             popup = unname(apply(small[, c('NUMBER', 'STREET')], 1,
+             paste, collapse = " ")))
 }
 }
 \references{
-\url{http://openaddresses.io/}
+\url{https://openaddresses.io/}
 }
 

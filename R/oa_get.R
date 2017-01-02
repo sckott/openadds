@@ -8,36 +8,31 @@
 #' if \code{TRUE}
 #' @param ... Pass on curl options to \code{\link[httr]{GET}}
 #'
-#' @return a tibble (a data.frame), with attributes for original url and path on disk
-#' @references \url{http://openaddresses.io/}
+#' @return a tibble (a data.frame), with attributes for original url and path
+#' on disk
+#' @references \url{https://openaddresses.io/}
 #' @examples \dontrun{
-#' dat <- oa_list()
-#' urls <- na.omit(dat$processed)
-#' (out1 <- oa_get(urls[6]))
-#' (out3 <- oa_get(urls[32]))
-#' (out4 <- oa_get(urls[876]))
-#' (out5 <- oa_get(urls[376]))
-#' (out6 <- oa_get(urls[474]))
-#' (out7 <- oa_get(urls[121]))
-#' (out8 <- oa_get(urls[41]))
-#' (out9 <- oa_get(urls[400]))
+#' (out1 <- oa_get("http://data.openaddresses.io/runs/142103/at/tirol.zip"))
+#' (out2 <-
+#'   oa_get("http://data.openaddresses.io/runs/142676/ca/bc/victoria.zip"))
 #'
 #' # from a openadd class object
 #' oa_get(as_openadd(country="us", state="nv", city="las_vegas"))
 #'
 #' # combine data sets
-#' (alldat <- oa_combine(out1, out3))
+#' (alldat <- oa_combine(out1, out2))
 #'
 #' # Map data
 #' if (!requireNamespace("leaflet")) {
 #'   install.packages("leaflet")
 #' }
-#' library("leaflet")
-#' small <- out9[1:10000L, ]
+#' library(leaflet)
+#' small <- out2[[1]][1:5000,]
 #' leaflet(small) %>%
 #'   addTiles() %>%
 #'   addCircles(lat = ~LAT, lng = ~LON,
-#'              popup = unname(apply(small[, c('NUMBER', 'STREET')], 1, paste, collapse = " ")))
+#'              popup = unname(apply(small[, c('NUMBER', 'STREET')], 1,
+#'              paste, collapse = " ")))
 #' }
 oa_get <- function(x, overwrite = FALSE, ...) {
   UseMethod("oa_get")
@@ -65,7 +60,9 @@ oa_get.character <- function(x, overwrite = FALSE, ...) {
 
 oa_GET <- function(url, ...){
   if (is.null(url) || is.na(url)) stop("input was NULL or NA", call. = FALSE)
-  if (!grepl("https?://|data\\.openaddresses\\.io", url)) stop("input doesn't appear to be an Openaddresses URL", call. = FALSE)
+  if (!grepl("https?://|data\\.openaddresses\\.io", url)) {
+    stop("input doesn't appear to be an Openaddresses URL", call. = FALSE)
+  }
   make_basedir(oa_cache_path())
   file <- make_path(url)
   if ( file.exists(path.expand(file)) ) {
@@ -91,7 +88,8 @@ make_path <- function(x) {
   file.path(oa_cache_path(), paste0(xx, collapse = "_"))
 }
 
-make_basedir <- function(path) dir.create(path, showWarnings = FALSE, recursive = TRUE)
+make_basedir <- function(path) dir.create(path, showWarnings = FALSE,
+                                          recursive = TRUE)
 
 read_csv_ <- function(x) suppressMessages(readr::read_csv(x))
 
@@ -102,15 +100,18 @@ read_zip_ <- function(fname) {
   switch(
     file_type(exdir),
     csv = {
-      files <- list.files(exdir, pattern = ".csv", full.names = TRUE, recursive = TRUE)
+      files <- list.files(exdir, pattern = ".csv", full.names = TRUE,
+                          recursive = TRUE)
       lapply(files, read_csv_)
     },
     shp = {
-      files <- list.files(exdir, pattern = ".shp", full.names = TRUE, recursive = TRUE)
+      files <- list.files(exdir, pattern = ".shp", full.names = TRUE,
+                          recursive = TRUE)
       lapply(files, read_shp_)
     },
     geojson = {
-      files <- list.files(exdir, pattern = ".geojson", full.names = TRUE, recursive = TRUE)
+      files <- list.files(exdir, pattern = ".geojson", full.names = TRUE,
+                          recursive = TRUE)
       lapply(files, read_geojson_)
     }
   )
@@ -127,7 +128,8 @@ read_shp_ <- function(x) {
 
 read_me <- function(x) {
   dir <- sub("\\.zip|\\.csv|\\.geojson", "", make_path(x))
-  ff <- list.files(dir, pattern = "README", ignore.case = TRUE, full.names = TRUE)
+  ff <- list.files(dir, pattern = "README", ignore.case = TRUE,
+                   full.names = TRUE)
   if (length(ff) == 0) {
     return(NULL)
   } else {
@@ -152,7 +154,8 @@ file_type <- function(b) {
 print.oa <- function(x, ..., n = 10) {
   cat(paste0("<Openaddresses data> ", attr(x, "name")), sep = "\n")
   cat(sprintf("paths: %s", get_em(x)), sep = "\n")
-  cat(paste0("data set sizes (NROW): ", paste0(vapply(x, NROW, 1), collapse = ", ")), sep = "\n")
+  cat(paste0("data set sizes (NROW): ", paste0(vapply(x, NROW, 1),
+                                               collapse = ", ")), sep = "\n")
   cat("first data_frame ...  ", sep = "\n")
   print(x[[1]], n = n)
 }
