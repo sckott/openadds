@@ -4,7 +4,7 @@
 #' @param country (characater) Country name
 #' @param state (characater) State (or province) name
 #' @param city (characater) City name
-#' @param ... Pass on curl options to \code{\link[httr]{GET}}
+#' @param ... Pass on curl options to \code{\link[crul]{HttpClient}}
 #' @return a tibble (a data.frame)
 #' @examples \dontrun{
 #' # return all data in a data.frame

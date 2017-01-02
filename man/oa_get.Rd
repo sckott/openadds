@@ -13,7 +13,7 @@ class openadd}
 \item{overwrite}{(logical) Will only overwrite existing path
 if \code{TRUE}}
 
-\item{...}{Pass on curl options to \code{\link[httr]{GET}}}
+\item{...}{Pass on curl options to \code{\link[crul]{HttpClient}}}
 }
 \value{
 a tibble (a data.frame), with attributes for original url and path

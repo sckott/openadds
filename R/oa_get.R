@@ -6,7 +6,7 @@
 #' class openadd
 #' @param overwrite	(logical) Will only overwrite existing path
 #' if \code{TRUE}
-#' @param ... Pass on curl options to \code{\link[httr]{GET}}
+#' @param ... Pass on curl options to \code{\link[crul]{HttpClient}}
 #'
 #' @return a tibble (a data.frame), with attributes for original url and path
 #' on disk

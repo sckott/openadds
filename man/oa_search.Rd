@@ -13,7 +13,7 @@ oa_search(country = NULL, state = NULL, city = NULL, ...)
 
 \item{city}{(characater) City name}
 
-\item{...}{Pass on curl options to \code{\link[httr]{GET}}}
+\item{...}{Pass on curl options to \code{\link[crul]{HttpClient}}}
 }
 \value{
 a tibble (a data.frame)
