@@ -14,5 +14,5 @@ oa_list <- function(...) {
                         opts = list(...))
   temp <- cli$get()
   temp$raise_for_status()
-  readr::read_tsv(temp$parse())
+  readr::read_tsv(temp$parse("UTF-8"))
 }

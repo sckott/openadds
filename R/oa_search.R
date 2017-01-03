@@ -4,7 +4,8 @@
 #' @param country (characater) Country name
 #' @param state (characater) State (or province) name
 #' @param city (characater) City name
-#' @param ... Pass on curl options to \code{\link[crul]{HttpClient}}
+#' @param ... Pass on curl options to \code{\link{oa_list}} and then
+#' to \code{\link[crul]{HttpClient}} within that function
 #' @return a tibble (a data.frame)
 #' @examples \dontrun{
 #' # return all data in a data.frame
@@ -18,7 +19,7 @@
 #' oa_search("us", "nv", "las_vegas")
 #' }
 oa_search <- function(country = NULL, state = NULL, city = NULL, ...) {
-  dd <- oa_list()
+  dd <- oa_list(...)
 
   all <- Map(function(x, y) {
     tmp <- basename(x)
