@@ -2,8 +2,8 @@
 % Please edit documentation in R/openadds-package.R
 \docType{package}
 \name{openadds-package}
-\alias{openadds}
 \alias{openadds-package}
+\alias{openadds}
 \title{R client for Openaddresses.io data}
 \description{
 R client for Openaddresses.io data
@@ -12,4 +12,3 @@ R client for Openaddresses.io data
 Scott Chamberlain \email{myrmecocystus@gmail.com}
 }
 \keyword{package}
-

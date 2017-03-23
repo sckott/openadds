@@ -35,4 +35,3 @@ oa_search(city = "houston")
 oa_search("us", "nv", "las_vegas")
 }
 }
-

@@ -42,4 +42,3 @@ leaflet(alldat) \%>\%
   addCircles(lat = ~lat, lng = ~lon, popup = ~address)
 }
 }
-

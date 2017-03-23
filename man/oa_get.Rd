@@ -50,4 +50,3 @@ leaflet(small) \%>\%
 \references{
 \url{https://openaddresses.io/}
 }
-

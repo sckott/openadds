@@ -2,10 +2,10 @@
 % Please edit documentation in R/caching.R
 \name{oa_cache}
 \alias{oa_cache}
+\alias{oa_cache_list}
 \alias{oa_cache_delete}
 \alias{oa_cache_delete_all}
 \alias{oa_cache_details}
-\alias{oa_cache_list}
 \title{Manage cached files}
 \usage{
 oa_cache_list()
@@ -51,4 +51,3 @@ oa_cache_details()
 # oa_cache_delete_all()
 }
 }
-

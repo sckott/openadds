@@ -23,4 +23,3 @@ List available data
 mean(res$`address count`, na.rm = TRUE)
 }
 }
-
