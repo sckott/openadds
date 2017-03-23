@@ -19,18 +19,20 @@ oa_cache_details(files = NULL)
 \arguments{
 \item{files}{File name or names}
 
-\item{force}{(logical) Should files be force deleted? Default: \code{FALSE}}
+\item{force}{(logical) Should files be force deleted? Default:
+\code{FALSE}}
 }
 \description{
 Manage cached files
 }
 \details{
-\code{cache_delete} only accepts 1 file name, while \code{cache_delete_all}
-doesn't accept any names, but deletes all files. For deleting many specific files,
-use \code{cache_delete} in a \code{\link{lapply}} type call
+\code{cache_delete} only accepts 1 file name, while
+\code{cache_delete_all} doesn't accept any names, but deletes all files.
+For deleting many specific files, use \code{cache_delete} in a
+\code{\link{lapply}} type call
 
-We cache using \code{\link[rappdirs]{user_cache_dir}}, find your cache
-folder by executing \code{rappdirs::user_cache_dir("openadds-cache")}
+We cache using \code{\link[rappdirs]{user_cache_dir}}, find your
+cache folder by executing \code{rappdirs::user_cache_dir("openadds-cache")}
 }
 \examples{
 \dontrun{

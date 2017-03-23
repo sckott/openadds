@@ -2,14 +2,14 @@
 #'
 #' @export
 #' @param ... Data sets, all need to be of class \code{oa}
-#' @details Gives back a single \code{tbl_df}, with a subset of columns, currently
-#' \code{lon}, \code{lat}, and \code{address}.
+#' @details Gives back a single \code{tbl_df}, with a subset of columns,
+#' currently \code{lon}, \code{lat}, and \code{address}.
 #'
 #' This function attempts to combine, but may fail sometimes.
-#' @return a tibble (a data.frame) of all the inputs combined, with attributes for
-#' original urls and paths on disk
+#' @return a tibble (a data.frame) of all the inputs combined, with attributes
+#' for original urls and paths on disk
 #' @examples \dontrun{
-#' dat <- oa_list()
+#' (dat <- oa_list())
 #'
 #' out1 <- oa_get(dat$processed[5])
 #' out2 <- oa_get(dat$processed[35])
@@ -21,8 +21,12 @@
 #' if (!requireNamespace("leaflet")) {
 #'   install.packages("leaflet")
 #' }
+#' salem <- oa_search(country = "us", state = "or", city = "city_of_salem")
+#' corvallis <- oa_search(country = "us", state = "or",
+#'   city = "city_of_corvallis")
+#' (alldat <- oa_combine(oa_get(salem$url), oa_get(corvallis$url)))
 #' library("leaflet")
-#' leaflet(alldat) %>%
+#' leaflet(alldat[sample(seq_len(NROW(alldat)), 1000), ]) %>%
 #'   addTiles() %>%
 #'   addCircles(lat = ~lat, lng = ~lon, popup = ~address)
 #' }
@@ -53,7 +57,8 @@ oa_combine <- function(...) {
       nms <- if (length(addname[[i]]) == 1) {
         out[[i]] <- stats::setNames(tmp, nms)
       } else {
-        tmp$address <- strtrim(apply(tmp[, addname[[i]]], 1, paste, collapse = " "))
+        tmp$address <- strtrim(apply(tmp[, addname[[i]]], 1, paste,
+                                     collapse = " "))
         for (j in seq_along(addname[[i]])) {
           tmp[[ addname[[i]][[j]] ]] <- NULL
         }

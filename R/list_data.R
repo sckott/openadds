@@ -10,8 +10,10 @@
 #' mean(res$`address count`, na.rm = TRUE)
 #' }
 oa_list <- function(...) {
-  cli <- crul::HttpClient$new(url = "http://results.openaddresses.io/state.txt",
-                        opts = list(...))
+  cli <- crul::HttpClient$new(
+    url = "http://results.openaddresses.io/state.txt",
+    opts = list(...)
+  )
   temp <- cli$get()
   temp$raise_for_status()
   readr::read_tsv(temp$parse("UTF-8"))

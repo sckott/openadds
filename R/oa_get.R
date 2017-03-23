@@ -95,7 +95,8 @@ make_basedir <- function(path) dir.create(path, showWarnings = FALSE,
 read_csv_ <- function(x) suppressMessages(readr::read_csv(x))
 
 read_zip_ <- function(fname) {
-  exdir <- file.path(oa_cache_path(), strsplit(basename(fname), "\\.")[[1]][[1]])
+  exdir <- file.path(oa_cache_path(),
+                     strsplit(basename(fname), "\\.")[[1]][[1]])
   utils::unzip(fname, exdir = exdir)
   on.exit(unlink(fname))
   switch(

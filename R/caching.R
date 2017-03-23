@@ -3,13 +3,15 @@
 #' @export
 #' @name oa_cache
 #' @param files File name or names
-#' @param force (logical) Should files be force deleted? Default: \code{FALSE}
-#' @details \code{cache_delete} only accepts 1 file name, while \code{cache_delete_all}
-#' doesn't accept any names, but deletes all files. For deleting many specific files,
-#' use \code{cache_delete} in a \code{\link{lapply}} type call
+#' @param force (logical) Should files be force deleted? Default:
+#' \code{FALSE}
+#' @details \code{cache_delete} only accepts 1 file name, while
+#' \code{cache_delete_all} doesn't accept any names, but deletes all files.
+#' For deleting many specific files, use \code{cache_delete} in a
+#' \code{\link{lapply}} type call
 #'
-#' @details We cache using \code{\link[rappdirs]{user_cache_dir}}, find your cache
-#' folder by executing \code{rappdirs::user_cache_dir("openadds-cache")}
+#' @details We cache using \code{\link[rappdirs]{user_cache_dir}}, find your
+#' cache folder by executing \code{rappdirs::user_cache_dir("openadds-cache")}
 #'
 #' @examples \dontrun{
 #' # list files in cache
@@ -32,8 +34,8 @@
 #' @export
 #' @rdname oa_cache
 oa_cache_list <- function() {
-  list.files(oa_cache_path(), pattern = ".csv|.zip|.shp|.geojson", ignore.case = TRUE,
-             recursive = TRUE, full.names = TRUE)
+  list.files(oa_cache_path(), pattern = ".csv|.zip|.shp|.geojson",
+             ignore.case = TRUE, recursive = TRUE, full.names = TRUE)
 }
 
 #' @export
@@ -55,8 +57,6 @@ oa_cache_delete <- function(files, force = TRUE) {
 #' @export
 #' @rdname oa_cache
 oa_cache_delete_all <- function(force = TRUE) {
-  # files <- list.files(oa_cache_path(), pattern = ".csv|.zip|.shp|.geojson", ignore.case = TRUE,
-  #                     full.names = TRUE, recursive = TRUE)
   dirs <- list.files(oa_cache_path(), full.names = TRUE)
   unlink(dirs, force = force, recursive = TRUE)
 }
@@ -65,7 +65,8 @@ oa_cache_delete_all <- function(force = TRUE) {
 #' @rdname oa_cache
 oa_cache_details <- function(files = NULL) {
   if (is.null(files)) {
-    files <- list.files(oa_cache_path(), pattern = ".csv|.zip|.shp|.geojson", ignore.case = TRUE,
+    files <- list.files(oa_cache_path(), pattern = ".csv|.zip|.shp|.geojson",
+                        ignore.case = TRUE,
                         full.names = TRUE, recursive = TRUE)
     structure(lapply(files, file_info_), class = "oa_cache_info")
   } else {

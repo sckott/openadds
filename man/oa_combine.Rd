@@ -10,21 +10,21 @@ oa_combine(...)
 \item{...}{Data sets, all need to be of class \code{oa}}
 }
 \value{
-a tibble (a data.frame) of all the inputs combined, with attributes for
-original urls and paths on disk
+a tibble (a data.frame) of all the inputs combined, with attributes
+for original urls and paths on disk
 }
 \description{
 Combine data helper
 }
 \details{
-Gives back a single \code{tbl_df}, with a subset of columns, currently
-\code{lon}, \code{lat}, and \code{address}.
+Gives back a single \code{tbl_df}, with a subset of columns,
+currently \code{lon}, \code{lat}, and \code{address}.
 
 This function attempts to combine, but may fail sometimes.
 }
 \examples{
 \dontrun{
-dat <- oa_list()
+(dat <- oa_list())
 
 out1 <- oa_get(dat$processed[5])
 out2 <- oa_get(dat$processed[35])
@@ -36,8 +36,12 @@ out4 <- oa_get(dat$processed[788])
 if (!requireNamespace("leaflet")) {
   install.packages("leaflet")
 }
+salem <- oa_search(country = "us", state = "or", city = "city_of_salem")
+corvallis <- oa_search(country = "us", state = "or",
+  city = "city_of_corvallis")
+(alldat <- oa_combine(oa_get(salem$url), oa_get(corvallis$url)))
 library("leaflet")
-leaflet(alldat) \%>\%
+leaflet(alldat[sample(seq_len(NROW(alldat)), 1000), ]) \%>\%
   addTiles() \%>\%
   addCircles(lat = ~lat, lng = ~lon, popup = ~address)
 }
