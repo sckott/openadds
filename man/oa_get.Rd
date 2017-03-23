@@ -13,7 +13,7 @@ class openadd}
 \item{overwrite}{(logical) Will only overwrite existing path
 if \code{TRUE}}
 
-\item{...}{Pass on curl options to \code{\link[crul]{HttpClient}}}
+\item{...}{Pass on curl options to \code{\link[crul:HttpClient]{crul::HttpClient()}}}
 }
 \value{
 a tibble (a data.frame), with attributes for original url and path
@@ -48,5 +48,5 @@ leaflet(small) \%>\%
 }
 }
 \references{
-\url{https://openaddresses.io/}
+https://openaddresses.io/
 }

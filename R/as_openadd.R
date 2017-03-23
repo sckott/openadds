@@ -7,11 +7,11 @@
 #' @param ... ignored
 #' @details This is a helper function to let the user specify what they want
 #' with any combination of country, state, and city - the output of which
-#' can be passed to \code{\link{oa_get}} to get data.
+#' can be passed to [oa_get()] to get data.
 #'
 #' If your search results in more than 1 result, we stop with message to
 #' refine your search.
-#' @return an object of class \code{openadd}
+#' @return an object of class `openadd`
 #' @examples \dontrun{
 #' as_openadd(country="us", state="nv", city="las_vegas")
 #'

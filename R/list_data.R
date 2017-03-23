@@ -1,7 +1,7 @@
 #' List available data
 #'
 #' @export
-#' @param ... Pass on curl options to \code{\link[crul]{HttpClient}}
+#' @param ... Pass on curl options to [crul::HttpClient()]
 #' @return A tibble (a data.frame)
 #' @examples \dontrun{
 #' (res <- oa_list())

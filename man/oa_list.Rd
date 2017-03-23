@@ -7,7 +7,7 @@
 oa_list(...)
 }
 \arguments{
-\item{...}{Pass on curl options to \code{\link[crul]{HttpClient}}}
+\item{...}{Pass on curl options to \code{\link[crul:HttpClient]{crul::HttpClient()}}}
 }
 \value{
 A tibble (a data.frame)

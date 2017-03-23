@@ -4,8 +4,8 @@
 #' @param country (characater) Country name
 #' @param state (characater) State (or province) name
 #' @param city (characater) City name
-#' @param ... Pass on curl options to \code{\link{oa_list}} and then
-#' to \code{\link[crul]{HttpClient}} within that function
+#' @param ... Pass on curl options to [oa_list()] and then
+#' to [crul::HttpClient()] within that function
 #' @return a tibble (a data.frame)
 #' @examples \dontrun{
 #' # return all data in a data.frame

@@ -1,9 +1,9 @@
 #' Combine data helper
 #'
 #' @export
-#' @param ... Data sets, all need to be of class \code{oa}
-#' @details Gives back a single \code{tbl_df}, with a subset of columns,
-#' currently \code{lon}, \code{lat}, and \code{address}.
+#' @param ... Data sets, all need to be of class `oa`
+#' @details Gives back a single `tbl_df`, with a subset of columns,
+#' currently `lon`, `lat`, and `address`.
 #'
 #' This function attempts to combine, but may fail sometimes.
 #' @return a tibble (a data.frame) of all the inputs combined, with attributes

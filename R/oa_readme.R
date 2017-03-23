@@ -1,7 +1,7 @@
 #' Print readme from one or more datasets
 #'
 #' @export
-#' @param x input, either an object of class \code{oa} or a list of such
+#' @param x input, either an object of class `oa` or a list of such
 #' objects
 #' @return character string
 #' @examples \dontrun{

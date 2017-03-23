@@ -10,6 +10,7 @@ License: MIT + file LICENSE
 URL: https://github.com/sckott/openadds
 BugReports: https://github.com/sckott/openadds/issues
 LazyData: true
+Roxygen: list(markdown = TRUE)
 Imports:
     crul (>= 0.2.0),
     jsonlite (>= 1.2),

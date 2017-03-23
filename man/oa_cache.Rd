@@ -29,9 +29,9 @@ Manage cached files
 \code{cache_delete} only accepts 1 file name, while
 \code{cache_delete_all} doesn't accept any names, but deletes all files.
 For deleting many specific files, use \code{cache_delete} in a
-\code{\link{lapply}} type call
+\code{\link[=lapply]{lapply()}} type call
 
-We cache using \code{\link[rappdirs]{user_cache_dir}}, find your
+We cache using \code{\link[rappdirs:user_cache_dir]{rappdirs::user_cache_dir()}}, find your
 cache folder by executing \code{rappdirs::user_cache_dir("openadds-cache")}
 }
 \examples{

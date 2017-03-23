@@ -5,12 +5,12 @@
 #' @param x (character) URL for an openaddresses dataset, or an object of
 #' class openadd
 #' @param overwrite	(logical) Will only overwrite existing path
-#' if \code{TRUE}
-#' @param ... Pass on curl options to \code{\link[crul]{HttpClient}}
+#' if `TRUE`
+#' @param ... Pass on curl options to [crul::HttpClient()]
 #'
 #' @return a tibble (a data.frame), with attributes for original url and path
 #' on disk
-#' @references \url{https://openaddresses.io/}
+#' @references https://openaddresses.io/
 #' @examples \dontrun{
 #' (out1 <- oa_get("http://data.openaddresses.io/runs/142103/at/tirol.zip"))
 #' (out2 <-
