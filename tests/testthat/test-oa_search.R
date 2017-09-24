@@ -36,7 +36,7 @@ test_that("oa_search works", {
   expect_equal(length(unique(cc$state)), 1)
   expect_equal(unique(cc$state), "tx")
 
-  expect_equal(length(dd$city), 2)
+  expect_equal(length(dd$city), 3)
   expect_equal(unique(dd$city), "houston")
 })
 
