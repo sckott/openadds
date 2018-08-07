@@ -2,7 +2,7 @@ openadds
 ========
 
 
-
+[![cran checks](https://cranchecks.info/badges/worst/openadds)](https://cranchecks.info/pkgs/openadds)
 [![Build Status](https://travis-ci.org/sckott/openadds.svg)](https://travis-ci.org/sckott/openadds)
 [![Build status](https://ci.appveyor.com/api/projects/status/xhn3m4ugungqcbmp?svg=true)](https://ci.appveyor.com/project/sckott/openadds)
 [![codecov.io](https://codecov.io/github/sckott/openadds/coverage.svg?branch=master)](https://codecov.io/github/sckott/openadds?branch=master)
