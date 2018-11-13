@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 [![cran version](http://www.r-pkg.org/badges/version/openadds)](https://cran.r-project.org/package=openadds)
 
 
-`openadds` is an R client for data from [Openaddresses.io](https://openaddresses.io/). Data comes from <http://results.openaddresses.io/>.
+`openadds` is an R client for data from <https://openaddresses.io/>. Data comes from <http://results.openaddresses.io/>.
 
 The reason for creating this R client is that the data coming from OpenAddresses is heterogenous in many ways:
 
@@ -103,6 +103,6 @@ leaflet(x) %>%
 
 ## Meta
 
-* Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+* Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
 * Please [report any issues or bugs](https://github.com/sckott/openadds/issues)
 * License: MIT
