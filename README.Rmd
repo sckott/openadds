@@ -94,7 +94,7 @@ Make an interactive map
 
 ```{r eval=FALSE}
 library("leaflet")
-leaflet(x) %>%
+leaflet(x[[1]]) %>%
   addTiles() %>%
   addCircles(lat = ~LAT, lng = ~LON, popup = ~STREET)
 ```

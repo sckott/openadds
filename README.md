@@ -2,6 +2,7 @@ openadds
 ========
 
 
+
 [![cran checks](https://cranchecks.info/badges/worst/openadds)](https://cranchecks.info/pkgs/openadds)
 [![Build Status](https://travis-ci.org/sckott/openadds.svg)](https://travis-ci.org/sckott/openadds)
 [![Build status](https://ci.appveyor.com/api/projects/status/xhn3m4ugungqcbmp?svg=true)](https://ci.appveyor.com/project/sckott/openadds)
@@ -10,7 +11,7 @@ openadds
 [![cran version](http://www.r-pkg.org/badges/version/openadds)](https://cran.r-project.org/package=openadds)
 
 
-`openadds` is an R client for data from [Openaddresses.io](http://openaddresses.io/). Data comes from <http://data.openaddresses.io>.
+`openadds` is an R client for data from <https://openaddresses.io/>. Data comes from <http://results.openaddresses.io/>.
 
 The reason for creating this R client is that the data coming from OpenAddresses is heterogenous in many ways:
 
@@ -45,24 +46,23 @@ library("openadds")
 
 ```r
 (dat <- oa_list())
-#> # A tibble: 1,680 x 15
-#>                      source
-#>                       <chr>
-#> 1   ar/ba/buenos_aires.json
-#> 2             at/31254.json
-#> 3             at/31255.json
-#> 4             at/31256.json
-#> 5    at/city_of_vienna.json
-#> 6             at/tirol.json
-#> 7  au/city_of_canberra.json
-#> 8       au/countrywide.json
-#> 9        au/queensland.json
-#> 10   au/tas-launceston.json
-#> # ... with 1,670 more rows, and 14 more variables: cache <chr>,
-#> #   sample <chr>, geometry type <chr>, address count <int>, version <chr>,
-#> #   fingerprint <chr>, cache time <S3: hms>, processed <chr>, process
-#> #   time <S3: hms>, output <chr>, attribution required <chr>, attribution
-#> #   name <chr>, share-alike <chr>, code version <chr>
+#> # A tibble: 2,384 x 16
+#>    source cache sample `geometry type` `address count` version fingerprint
+#>    <chr>  <chr> <chr>  <chr>                     <int> <chr>   <chr>      
+#>  1 ae/du… http… http:… Point                    127655 <NA>    880f5b19a9…
+#>  2 ae/du… http… http:… Point                    128058 <NA>    7aabcea765…
+#>  3 ar/c/… http… http:… <NA>                     555755 <NA>    e76afd805a…
+#>  4 ar/m/… http… http:… Polygon                   30870 <NA>    0e82a5cb0d…
+#>  5 at/31… http… http:… <NA>                     218885 <NA>    f06a9cd175…
+#>  6 at/31… http… http:… <NA>                     910854 <NA>    f06a9cd175…
+#>  7 at/31… http… http:… <NA>                    1201531 <NA>    f06a9cd175…
+#>  8 at/ci… http… http:… <NA>                     282313 <NA>    00d6d62202…
+#>  9 at/ti… http… http:… Unknown                  194136 <NA>    9a8bb12e58…
+#> 10 au/ac… http… http:… Point                    211142 <NA>    f76401eec0…
+#> # ... with 2,374 more rows, and 9 more variables: `cache time` <time>,
+#> #   processed <chr>, `process time` <time>, `process hash` <chr>,
+#> #   output <chr>, `attribution required` <chr>, `attribution name` <chr>,
+#> #   `share-alike` <chr>, `code version` <chr>
 ```
 
 ## Search for datasets
@@ -70,20 +70,20 @@ library("openadds")
 
 ```r
 oa_search(country = "us", state = "ca")
-#> # A tibble: 53 x 5
-#>    country state                  city    id
-#> *    <chr> <chr>                 <chr> <chr>
-#> 1       us    ca               alameda      
-#> 2       us    ca                amador      
-#> 3       us    ca              berkeley      
-#> 4       us    ca                 butte      
-#> 5       us    ca       city_of_anaheim      
-#> 6       us    ca   city_of_bakersfield      
-#> 7       us    ca        city_of_carson      
-#> 8       us    ca     city_of_cupertino      
-#> 9       us    ca       city_of_hayward      
-#> 10      us    ca city_of_mountain_view      
-#> # ... with 43 more rows, and 1 more variables: url <chr>
+#> # A tibble: 86 x 5
+#>    country state city          id    url                                  
+#>  * <chr>   <chr> <chr>         <chr> <chr>                                
+#>  1 us      ca    alameda       ""    http://data.openaddresses.io/runs/52…
+#>  2 us      ca    amador        ""    http://data.openaddresses.io/runs/52…
+#>  3 us      ca    berkeley      ""    http://data.openaddresses.io/runs/52…
+#>  4 us      ca    butte         ""    http://data.openaddresses.io/runs/52…
+#>  5 us      ca    calaveras     ""    http://data.openaddresses.io/runs/52…
+#>  6 us      ca    city_of_anah… ""    http://data.openaddresses.io/runs/52…
+#>  7 us      ca    city_of_bake… ""    http://data.openaddresses.io/runs/52…
+#>  8 us      ca    city_of_brea  ""    http://data.openaddresses.io/runs/52…
+#>  9 us      ca    city_of_burb… ""    http://data.openaddresses.io/runs/52…
+#> 10 us      ca    city_of_cars… ""    http://data.openaddresses.io/runs/52…
+#> # ... with 76 more rows
 ```
 
 ## Get data
@@ -93,25 +93,24 @@ Passing in a URL
 
 ```r
 (out1 <- oa_get(dat$processed[5]))
-#> <Openaddresses data> city_of_vienna
-#> paths: /Users/sacmac/Library/Caches/openadds-ca ...
-#> data set sizes (NROW): 282313
+#> <Openaddresses data> 31254
+#> paths: /Users/sckott/Library/Caches/openadds-ca ...
+#> data set sizes (NROW): 218885
 #> first data_frame ...  
-#> # A tibble: 282,313 x 11
-#>         LON      LAT NUMBER       STREET  UNIT  CITY DISTRICT REGION
-#>       <dbl>    <dbl>  <chr>        <chr> <chr> <chr>    <chr>  <chr>
-#> 1  16.36766 48.21032      1    Irisgasse  <NA>  <NA>     <NA>   <NA>
-#> 2  16.36743 48.21029     13  Naglergasse  <NA>  <NA>     <NA>   <NA>
-#> 3  16.36674 48.21101      1  Heidenschuß  <NA>  <NA>     <NA>   <NA>
-#> 4  16.36657 48.21100     31  Naglergasse  <NA>  <NA>     <NA>   <NA>
-#> 5  16.36954 48.21006      7   Tuchlauben  <NA>  <NA>     <NA>   <NA>
-#> 6  16.37587 48.20312      4 Schubertring  <NA>  <NA>     <NA>   <NA>
-#> 7  16.37547 48.20297      8  Fichtegasse  <NA>  <NA>     <NA>   <NA>
-#> 8  16.37593 48.20226      7 Schubertring  <NA>  <NA>     <NA>   <NA>
-#> 9  16.37403 48.20418     15 Seilerstätte  <NA>  <NA>     <NA>   <NA>
-#> 10 16.37279 48.20407     18    Annagasse  <NA>  <NA>     <NA>   <NA>
-#> # ... with 2.823e+05 more rows, and 3 more variables: POSTCODE <int>,
-#> #   ID <chr>, HASH <chr>
+#> # A tibble: 218,885 x 11
+#>      LON   LAT NUMBER STREET UNIT  CITY  DISTRICT REGION POSTCODE ID   
+#>    <dbl> <dbl> <chr>  <chr>  <chr> <chr> <chr>    <chr>     <int> <chr>
+#>  1  11.4  47.2 21     Bachg… <NA>  <NA>  <NA>     <NA>       6080 <NA> 
+#>  2  11.4  47.2 51     Bachg… <NA>  <NA>  <NA>     <NA>       6080 <NA> 
+#>  3  11.4  47.2 1      Burgw… <NA>  <NA>  <NA>     <NA>       6080 <NA> 
+#>  4  11.4  47.2 15     Burgw… <NA>  <NA>  <NA>     <NA>       6080 <NA> 
+#>  5  11.4  47.2 21     Burgw… <NA>  <NA>  <NA>     <NA>       6080 <NA> 
+#>  6  11.4  47.2 23     Burgw… <NA>  <NA>  <NA>     <NA>       6080 <NA> 
+#>  7  11.4  47.2 52     Burgw… <NA>  <NA>  <NA>     <NA>       6080 <NA> 
+#>  8  11.4  47.2 1      Grill… <NA>  <NA>  <NA>     <NA>       6080 <NA> 
+#>  9  11.4  47.2 3      Grill… <NA>  <NA>  <NA>     <NA>       6080 <NA> 
+#> 10  11.4  47.2 5      Grill… <NA>  <NA>  <NA>     <NA>       6080 <NA> 
+#> # ... with 2.189e+05 more rows, and 1 more variable: HASH <chr>
 ```
 
 First getting URL for dataset through `as_openadd()`, then passing to `oa_get()`
@@ -129,24 +128,23 @@ First getting URL for dataset through `as_openadd()`, then passing to `oa_get()`
 ```r
 oa_get(x)
 #> <Openaddresses data> las_vegas
-#> paths: /Users/sacmac/Library/Caches/openadds-ca ...
-#> data set sizes (NROW): 159
+#> paths: /Users/sckott/Library/Caches/openadds-ca ...
+#> data set sizes (NROW): 743285
 #> first data_frame ...  
-#> # A tibble: 159 x 11
-#>          LON      LAT NUMBER                      STREET  UNIT  CITY
-#>        <dbl>    <dbl>  <int>                       <chr> <chr> <chr>
-#> 1  -115.0529 36.15966     NA RODRIGUEZ-DE-LOPEZ GRACIELA  <NA>  <NA>
-#> 2  -115.0518 36.16089   5581             ORCHARD LN #150  <NA>  <NA>
-#> 3  -115.0514 36.16099   5587                  ORCHARD LN  <NA>  <NA>
-#> 4  -115.0525 36.16001   5516                  ORCHARD LN  <NA>  <NA>
-#> 5  -115.0524 36.16059   6320           E CHARLESTON BLVD  <NA>  <NA>
-#> 6  -115.0522 36.16039     NA              TAYLOR CYNTHIA  <NA>  <NA>
-#> 7  -115.0524 36.16032   5539                  ORCHARD LN  <NA>  <NA>
-#> 8  -115.0520 36.15991    863                   HURON AVE  <NA>  <NA>
-#> 9  -115.0501 36.15981   5650                 VINEYARD LN  <NA>  <NA>
-#> 10 -115.0528 36.15998   5528                  ORCHARD LN  <NA>  <NA>
-#> # ... with 149 more rows, and 5 more variables: DISTRICT <chr>,
-#> #   REGION <chr>, POSTCODE <chr>, ID <chr>, HASH <chr>
+#> # A tibble: 743,285 x 11
+#>      LON   LAT NUMBER STREET  UNIT CITY  DISTRICT REGION POSTCODE ID   
+#>    <dbl> <dbl>  <int> <chr>  <int> <chr> <chr>    <chr>  <chr>    <chr>
+#>  1 -115.  36.2      0 <NA>      NA <NA>  <NA>     <NA>   <NA>     <NA> 
+#>  2 -115.  36.1   2135 BERNA…    NA <NA>  <NA>     <NA>   <NA>     <NA> 
+#>  3 -115.  36.2   1985 DUNEV…    NA <NA>  <NA>     <NA>   <NA>     <NA> 
+#>  4 -115.  36.2      0 <NA>      NA <NA>  <NA>     <NA>   <NA>     <NA> 
+#>  5 -115.  36.2      0 <NA>      NA <NA>  <NA>     <NA>   <NA>     <NA> 
+#>  6 -115.  36.0    613 MT EL…    NA <NA>  <NA>     <NA>   <NA>     <NA> 
+#>  7 -115.  36.0    597 MT HU…    NA <NA>  <NA>     <NA>   <NA>     <NA> 
+#>  8 -115.  36.3      0 <NA>      NA <NA>  <NA>     <NA>   <NA>     <NA> 
+#>  9 -115.  36.2      0 <NA>      NA <NA>  <NA>     <NA>   <NA>     <NA> 
+#> 10 -115.  36.1      0 <NA>      NA <NA>  <NA>     <NA>   <NA>     <NA> 
+#> # ... with 7.433e+05 more rows, and 1 more variable: HASH <chr>
 ```
 
 ## Combine multiple datasets
@@ -155,20 +153,20 @@ oa_get(x)
 ```r
 out2 <- oa_get(dat$processed[35])
 (alldat <- oa_combine(out1, out2))
-#> # A tibble: 383,344 x 4
-#>         lon      lat         address        dataset
-#> *     <dbl>    <dbl>           <chr>          <chr>
-#> 1  16.36766 48.21032     1 Irisgasse city_of_vienna
-#> 2  16.36743 48.21029  13 Naglergasse city_of_vienna
-#> 3  16.36674 48.21101   1 Heidenschuß city_of_vienna
-#> 4  16.36657 48.21100  31 Naglergasse city_of_vienna
-#> 5  16.36954 48.21006    7 Tuchlauben city_of_vienna
-#> 6  16.37587 48.20312  4 Schubertring city_of_vienna
-#> 7  16.37547 48.20297   8 Fichtegasse city_of_vienna
-#> 8  16.37593 48.20226  7 Schubertring city_of_vienna
-#> 9  16.37403 48.20418 15 Seilerstätte city_of_vienna
-#> 10 16.37279 48.20407    18 Annagasse city_of_vienna
-#> # ... with 383,334 more rows
+#> # tibble [1,871,200 × 4]
+#>      lon   lat address        dataset
+#>  * <dbl> <dbl> <chr>          <chr>  
+#>  1  11.4  47.2 21 Bachgangweg 31254  
+#>  2  11.4  47.2 51 Bachgangweg 31254  
+#>  3  11.4  47.2 1 Burgweg      31254  
+#>  4  11.4  47.2 15 Burgweg     31254  
+#>  5  11.4  47.2 21 Burgweg     31254  
+#>  6  11.4  47.2 23 Burgweg     31254  
+#>  7  11.4  47.2 52 Burgweg     31254  
+#>  8  11.4  47.2 1 Grillhofweg  31254  
+#>  9  11.4  47.2 3 Grillhofweg  31254  
+#> 10  11.4  47.2 5 Grillhofweg  31254  
+#> # ... with 1,871,190 more rows
 ```
 
 ## Map data
@@ -185,7 +183,7 @@ Make an interactive map
 
 ```r
 library("leaflet")
-leaflet(x) %>%
+leaflet(x[[1]]) %>%
   addTiles() %>%
   addCircles(lat = ~LAT, lng = ~LON, popup = ~STREET)
 ```
@@ -194,6 +192,6 @@ leaflet(x) %>%
 
 ## Meta
 
-* Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+* Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
 * Please [report any issues or bugs](https://github.com/sckott/openadds/issues)
 * License: MIT
