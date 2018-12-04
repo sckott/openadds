@@ -5,7 +5,7 @@ test_that("oa_get works", {
 
   # works for zip files
   url1 <- "http://data.openaddresses.io/runs/128358/us/ma/town_of_newton.zip"
-  aa <- oa_get(url1)
+  aa <- suppressWarnings(oa_get(url1))
 
   expect_is(aa, "oa")
   expect_is(aa[[1]], "data.frame")
