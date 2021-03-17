@@ -47,7 +47,7 @@ oa_search <- function(country = NULL, state = NULL, city = NULL, ...) {
   if (length(comp(list(country, state, city))) != 0) {
     df <- sub_set(df, list(country = country, state = state, city = city))
   }
-  tibble::as_data_frame(df)
+  tibble::as_tibble(df)
 }
 
 sub_set <- function(df, x) {

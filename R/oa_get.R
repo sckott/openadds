@@ -120,12 +120,12 @@ read_zip_ <- function(fname) {
 }
 
 read_geojson_ <- function(x) {
-  tibble::as_data_frame(jsonlite::fromJSON(x, flatten = TRUE)$features)
+  tibble::as_tibble(jsonlite::fromJSON(x, flatten = TRUE)$features)
 }
 
 read_shp_ <- function(x) {
   tmp <- maptools::readShapeSpatial(x)
-  tibble::as_data_frame(tmp@data)
+  tibble::as_tibble(tmp@data)
 }
 
 read_me <- function(x) {
