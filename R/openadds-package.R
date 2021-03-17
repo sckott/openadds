@@ -1,4 +1,5 @@
-#' R client for Openaddresses.io data
+#' @title openadds
+#' @description R client for Openaddresses.io data
 #'
 #' @importFrom readr read_csv read_tsv
 #' @importFrom maptools readShapeSpatial
@@ -6,6 +7,5 @@
 #' @name openadds-package
 #' @aliases openadds
 #' @docType package
-#' @author Scott Chamberlain \email{myrmecocystus@@gmail.com}
 #' @keywords package
 NULL

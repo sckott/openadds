@@ -4,11 +4,8 @@
 \name{openadds-package}
 \alias{openadds-package}
 \alias{openadds}
-\title{R client for Openaddresses.io data}
+\title{openadds}
 \description{
 R client for Openaddresses.io data
-}
-\author{
-Scott Chamberlain \email{myrmecocystus@gmail.com}
 }
 \keyword{package}

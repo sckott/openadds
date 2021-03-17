@@ -4,6 +4,6 @@
 ^README\.Rmd$
 ^cran-comments\.md$
 ^CODE_OF_CONDUCT\.md$
-^appveyor.\yml$
 .github
 ^LICENSE\.md$
+Makefile

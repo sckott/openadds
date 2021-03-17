@@ -28,6 +28,6 @@ cat(oa_readme(xx))
 url2 <- "http://data.openaddresses.io/runs/101436/us/ca/yolo.zip"
 zz <- oa_get(url2)
 oa_readme(list(xx, zz))
-cat(oa_readme(list(xx, zz)), sep = "\\n\\n")
+cat(oa_readme(list(xx, zz)), sep = "\n\n")
 }
 }
