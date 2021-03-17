@@ -3,7 +3,7 @@ Title: Client to Access 'Openaddresses' Data
 Description: 'Openaddresses' (<https://openaddresses.io/>) client. Search,
     fetch data, and combine 'datasets'. Outputs are easy to visualize
     with base plots, 'ggplot2', or 'leaflet'.
-Version: 0.2.1.9130
+Version: 0.2.2.91
 Authors@R: person("Scott", "Chamberlain", role = c("aut","cre"),
     email = "myrmecocystus@gmail.com")
 License: MIT + file LICENSE
@@ -22,7 +22,6 @@ Imports:
     maptools (>= 0.8-40),
     rappdirs (>= 0.3.1)
 Suggests:
-    roxygen2 (>= 6.1.1),
     testthat,
     leaflet
 RoxygenNote: 6.1.1
